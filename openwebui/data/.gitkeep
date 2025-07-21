@@ -1,0 +1,2 @@
+# This file ensures the data directory exists in git
+# Open WebUI user data, conversations, and uploads will be stored here

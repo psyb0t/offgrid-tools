@@ -1,0 +1,50 @@
+services:
+  kiwix:
+    image: ghcr.io/kiwix/kiwix-serve:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./zim/data:/data:ro
+    command: "*.zim"
+    restart: unless-stopped
+    networks:
+      - offgrid
+    environment:
+      - PORT=8080
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./ollama/data:/root/.ollama
+    restart: unless-stopped
+    networks:
+      - offgrid
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "3000:8080"
+    volumes:
+      - ./openwebui/data:/app/backend/data
+    restart: unless-stopped
+    networks:
+      - offgrid
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      - ollama
+
+networks:
+  offgrid:
+    driver: bridge

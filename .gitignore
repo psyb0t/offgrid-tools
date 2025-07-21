@@ -1,0 +1,33 @@
+# Data directories - container persistent data
+ollama/data/*
+!ollama/data/.gitkeep
+openwebui/data/*
+!openwebui/data/.gitkeep
+zim/data/*
+!zim/data/.gitkeep
+
+# Docker images archive
+docker-images/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp

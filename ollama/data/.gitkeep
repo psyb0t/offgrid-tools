@@ -1,0 +1,2 @@
+# This file ensures the data directory exists in git
+# Ollama models and configuration will be stored here

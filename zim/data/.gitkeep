@@ -1,0 +1,2 @@
+# This file ensures the data directory exists in git
+# ZIM files (Wikipedia, Stack Overflow, etc.) will be stored here
