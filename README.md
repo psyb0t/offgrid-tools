@@ -10,12 +10,18 @@ fuck the grid 🖕 Docker Compose setup for when the internet dies and you still
 
 ## 🚀 the stack
 
-- **Kiwix** 📚 - all of wikipedia without big tech watching (bring your own .zim files)
+- **Kiwix** 📚 - offline knowledge server (supports wikipedia, stackoverflow, gutenberg, wiktionary, whatever .zim files you throw at it)
 - **Ollama** 🤖 - AI that runs on your hardware, not in some corpo datacenter
 - **Open WebUI** 💬 - talk to your AI without sending chat logs to surveillance capitalism
 
 ## 🎯 getting started
 
 clone this repo, run `docker-compose up`, become ungovernable 😈
+
+## 🌐 where to find your shit
+
+- **Kiwix** 📚 - `http://localhost:8080` - whatever knowledge you dumped in there
+- **Open WebUI** 💬 - `http://localhost:3000` - AI chat interface  
+- **Ollama API** 🤖 - `http://localhost:11434` - raw AI endpoint
 
 no tracking 🚫 no telemetry 🚫 no bullshit 🚫 just tools that work when everything else fails 💀
