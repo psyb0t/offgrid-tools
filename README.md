@@ -24,4 +24,46 @@ clone this repo, run `docker-compose up`, become ungovernable 😈
 - **Open WebUI** 💬 - `http://localhost:3000` - AI chat interface  
 - **Ollama API** 🤖 - `http://localhost:11434` - raw AI endpoint
 
+## 📋 what the fuck is this anyway
+
+this is a self-contained digital bunker for when shit hits the fan. internet goes down? government censors your access? ISP decides to fuck with you? doesn't matter. this stack runs entirely on your local machine.
+
+**Kiwix** 📚 serves up compressed knowledge archives (.zim files). download wikipedia, stack overflow, project gutenberg, medical texts, survival guides, whatever. all searchable offline. it's like having the library of alexandria on your laptop but without the fire risk.
+
+**Ollama** 🤖 is your local AI that doesn't phone home. runs llama, mistral, code models, whatever. no api keys, no monthly subscriptions, no sending your private thoughts to openai's data mining operation. just raw silicon doing math for you.
+
+**Open WebUI** 💬 gives you a chatgpt-like interface that talks to your local ollama instance. upload documents, ask questions, generate code, whatever. all stays on your hardware.
+
+the beauty is everything talks to everything else through docker's internal network. no external dependencies once it's running. 
+
+## 🏴‍☠️ getting .zim files
+
+- official kiwix library: `download.kiwix.org/zim/`
+- wikipedia dumps: grab the latest from their torrents
+- stack overflow: because you'll need to debug shit offline too
+- medical references: for when webmd isn't available
+- whatever else you can find in .zim format
+
+throw them in `./zim/data/` and kiwix will serve them all up.
+
+## 🤖 getting AI models
+
+once ollama is running:
+```bash
+docker exec -it offgrid-tools-ollama-1 ollama pull llama3.2:1b
+docker exec -it offgrid-tools-ollama-1 ollama pull codellama
+docker exec -it offgrid-tools-ollama-1 ollama pull mistral
+```
+
+smaller models run on potato hardware. bigger models need decent gpu/ram.
+
+## 💾 data persistence
+
+everything important lives in these folders:
+- `./zim/data/` - your knowledge archives
+- `./ollama/data/` - AI models and config  
+- `./openwebui/data/` - chat history and settings
+
+back these up. when the apocalypse comes you'll thank yourself.
+
 no tracking 🚫 no telemetry 🚫 no bullshit 🚫 just tools that work when everything else fails 💀
