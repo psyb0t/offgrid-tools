@@ -9,6 +9,7 @@ IMAGES_DIR="${SCRIPT_DIR}/docker-images"
 echo "=== Saving Docker Images for Offline Use ==="
 echo "This will download and save the following images:"
 echo "  📚 Kiwix server for offline content"
+echo "  🌐 Zimit for web content archiving"
 echo "  🤖 Ollama for local AI models"
 echo "  🌐 Open WebUI for AI chat interface"
 echo "  🎉 Ollama Chat Party for RAG-enabled chat"
@@ -24,6 +25,7 @@ mkdir -p "$IMAGES_DIR"
 IMAGES=(
     # Offline content server
     "ghcr.io/kiwix/kiwix-serve:latest"
+    "ghcr.io/openzim/zimit:latest"  # Web content archiving tool
     
     # AI/LLM server and UI
     "ollama/ollama:latest"          # Local AI model server
@@ -47,8 +49,50 @@ for image in "${IMAGES[@]}"; do
     filename=$(echo "$image" | sed 's|/|-|g' | sed 's|:|_|g')
     tarfile="${IMAGES_DIR}/${filename}.tar"
     
-    echo "  ↳ Pulling image..."
-    if docker pull "$image"; then
+    # Check if we need to update this image
+    needs_update=false
+    
+    # Check if local image exists and get its ID
+    local_image_id=$(docker images -q "$image" 2>/dev/null)
+    
+    if [[ -z "$local_image_id" ]]; then
+        echo "  ↳ Image not found locally, will pull"
+        needs_update=true
+    else
+        # Check if there's a newer version available
+        echo "  ↳ Checking for updates..."
+        if docker pull "$image"; then
+            new_image_id=$(docker images -q "$image" 2>/dev/null)
+            if [[ "$local_image_id" != "$new_image_id" ]]; then
+                echo "  ↳ New version found, will update"
+                needs_update=true
+            else
+                echo "  ↳ Image is up to date"
+                # Check if tar file exists and is newer than a reasonable threshold
+                if [[ -f "$tarfile" ]]; then
+                    echo "  ↳ Tar file already exists, skipping"
+                    size=$(du -h "$tarfile" | cut -f1)
+                    echo "  📦 Existing size: $size"
+                    continue
+                else
+                    echo "  ↳ Tar file missing, will create"
+                    needs_update=true
+                fi
+            fi
+        else
+            echo "  ↳ Could not check for updates, using local image"
+            if [[ -f "$tarfile" ]]; then
+                echo "  ↳ Tar file already exists, skipping"
+                size=$(du -h "$tarfile" | cut -f1)
+                echo "  📦 Existing size: $size"
+                continue
+            else
+                needs_update=true
+            fi
+        fi
+    fi
+    
+    if [[ "$needs_update" == "true" ]]; then
         echo "  ↳ Saving to: $tarfile"
         if docker save -o "$tarfile" "$image"; then
             echo "  ✅ Saved successfully"
@@ -59,9 +103,6 @@ for image in "${IMAGES[@]}"; do
             echo "  ❌ Failed to save $image"
             exit 1
         fi
-    else
-        echo "  ❌ Failed to pull $image"
-        exit 1
     fi
 done
 
@@ -78,6 +119,7 @@ du -sh "$IMAGES_DIR"
 echo ""
 echo "📋 Available images for offline use:"
 echo "  📚 Kiwix: ghcr.io/kiwix/kiwix-serve:latest"
+echo "  🌐 Zimit: ghcr.io/openzim/zimit:latest"
 echo "  🤖 Ollama: ollama/ollama:latest"
 echo "  🌐 Open WebUI: ghcr.io/open-webui/open-webui:main"
 echo "  🎉 Chat Party: psyb0t/ollama-chat-party:latest"

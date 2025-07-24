@@ -1,12 +1,6 @@
-# Data directories - container persistent data
-ollama/data/*
-!ollama/data/.gitkeep
-openwebui/data/*
-!openwebui/data/.gitkeep
-ollama-chat-party/data/*
-!ollama-chat-party/data/.gitkeep
-zim/data/*
-!zim/data/.gitkeep
+# Data directories - ignore all data directories but keep .gitkeep files
+**/data/*
+!**/data/.gitkeep
 
 # Docker images archive
 docker-images/
