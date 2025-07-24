@@ -3,6 +3,8 @@ ollama/data/*
 !ollama/data/.gitkeep
 openwebui/data/*
 !openwebui/data/.gitkeep
+ollama-chat-party/data/*
+!ollama-chat-party/data/.gitkeep
 zim/data/*
 !zim/data/.gitkeep
 

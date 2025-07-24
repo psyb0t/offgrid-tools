@@ -11,6 +11,7 @@ echo "This will download and save the following images:"
 echo "  📚 Kiwix server for offline content"
 echo "  🤖 Ollama for local AI models"
 echo "  🌐 Open WebUI for AI chat interface"
+echo "  🎉 Ollama Chat Party for RAG-enabled chat"
 echo "  🐍 Python runtime (full version)"
 echo "  🐹 Go development environment (full version)"
 echo "  🖥️  Ubuntu base OS for containers"
@@ -27,6 +28,7 @@ IMAGES=(
     # AI/LLM server and UI
     "ollama/ollama:latest"          # Local AI model server
     "ghcr.io/open-webui/open-webui:main"  # Web UI for Ollama
+    "psyb0t/ollama-chat-party:latest"      # RAG-enabled chat interface
     
     # Programming language runtimes (full versions)
     "python:3.12"                   # Latest stable Python (full)
@@ -78,6 +80,7 @@ echo "📋 Available images for offline use:"
 echo "  📚 Kiwix: ghcr.io/kiwix/kiwix-serve:latest"
 echo "  🤖 Ollama: ollama/ollama:latest"
 echo "  🌐 Open WebUI: ghcr.io/open-webui/open-webui:main"
+echo "  🎉 Chat Party: psyb0t/ollama-chat-party:latest"
 echo "  🐍 Python: python:3.12 (full)"
 echo "  🐹 Go: golang:1.24 (full)"
 echo "  🖥️  Base: ubuntu:22.04"

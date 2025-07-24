@@ -13,6 +13,7 @@ fuck the grid 🖕 Docker Compose setup for when the internet dies and you still
 - **Kiwix** 📚 - offline knowledge server (supports wikipedia, stackoverflow, gutenberg, wiktionary, whatever .zim files you throw at it)
 - **Ollama** 🤖 - AI that runs on your hardware, not in some corpo datacenter
 - **Open WebUI** 💬 - talk to your AI without sending chat logs to surveillance capitalism
+- **Ollama Chat Party** 🎉 - RAG-enabled chat interface with document ingestion capabilities
 
 ## 🎯 getting started
 
@@ -22,6 +23,7 @@ clone this repo, run `docker-compose up`, become ungovernable 😈
 
 - **Kiwix** 📚 - `http://localhost:8080` - whatever knowledge you dumped in there
 - **Open WebUI** 💬 - `http://localhost:3000` - AI chat interface  
+- **Ollama Chat Party** 🎉 - `http://localhost:8000` - RAG chat with document uploads (password: `offgrid123`)
 - **Ollama API** 🤖 - `http://localhost:11434` - raw AI endpoint
 
 ## 📋 what the fuck is this anyway
@@ -33,6 +35,8 @@ this is a self-contained digital bunker for when shit hits the fan. internet goe
 **Ollama** 🤖 is your local AI that doesn't phone home. runs llama, mistral, code models, whatever. no api keys, no monthly subscriptions, no sending your private thoughts to openai's data mining operation. just raw silicon doing math for you.
 
 **Open WebUI** 💬 gives you a chatgpt-like interface that talks to your local ollama instance. upload documents, ask questions, generate code, whatever. all stays on your hardware.
+
+**Ollama Chat Party** 🎉 is another chat interface with enhanced RAG (retrieval-augmented generation) capabilities. drop documents in the `/documents` folder and it'll ingest them for context-aware conversations. password protected because even in the apocalypse you need some security.
 
 the beauty is everything talks to everything else through docker's internal network. no external dependencies once it's running. 
 
@@ -63,6 +67,7 @@ everything important lives in these folders:
 - `./zim/data/` - your knowledge archives
 - `./ollama/data/` - AI models and config  
 - `./openwebui/data/` - chat history and settings
+- `./ollama-chat-party/data/` - documents for RAG ingestion
 
 back these up. when the apocalypse comes you'll thank yourself.
 

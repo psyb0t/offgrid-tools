@@ -45,6 +45,30 @@ services:
     depends_on:
       - ollama
 
+  ollama-chat-party:
+    image: psyb0t/ollama-chat-party:latest
+    tty: true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ollama-chat-party/data:/documents
+    restart: unless-stopped
+    networks:
+      - offgrid
+    environment:
+      - OLLAMA_CHAT_PARTY_WEB_UI_PASSWORD=offgrid123
+    command:
+      [
+        "--listen",
+        "0.0.0.0:8000",
+        "--rag-dir",
+        "/documents",
+        "--ollama-url",
+        "http://ollama:11434",
+      ]
+    depends_on:
+      - ollama
+
 networks:
   offgrid:
     driver: bridge
