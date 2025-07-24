@@ -14,11 +14,11 @@ The RAG engine is accessible at: http://localhost:8000
 
 ## Adding Documents for RAG
 
-Place documents you want to include in RAG searches in the `rag-docs/` directory:
+Place documents you want to include in RAG searches in the `data/` directory:
 
 ```bash
 # Add documents to be indexed
-cp /path/to/your/documents/* ./ollama-chat-party/rag-docs/
+cp /path/to/your/documents/* ./ollama-chat-party/data/
 
 # Restart the service to reindex
 docker-compose restart ollama-chat-party
