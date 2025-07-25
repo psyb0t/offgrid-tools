@@ -29,9 +29,10 @@ fuck the grid 🖕 Docker Compose setup for when the internet dies and you still
 - sudo privileges for directory permissions
 
 **🪟 windows users:**
-use WSL2 (Windows Subsystem for Linux) for best compatibility:
+
+**option 1: WSL2 (recommended)**
 ```powershell
-# install WSL2 with Ubuntu (run as Administrator)
+# install WSL2 with Ubuntu (run as Administrator in PowerShell)
 wsl --install -d Ubuntu
 
 # restart computer, then open Ubuntu terminal and run:
@@ -39,6 +40,28 @@ sudo apt update && sudo apt install -y docker.io docker-compose-v2
 sudo usermod -aG docker $USER
 
 # logout/login to Ubuntu terminal, then continue with setup below
+```
+
+**option 2: Docker Desktop**
+```powershell
+# download and install Docker Desktop from docker.com
+# ensure "Use WSL 2 based engine" is enabled in Docker Desktop settings
+# open PowerShell or Command Prompt and run:
+git clone [repo-url]
+cd offgrid-tools
+
+# skip the chmod step (Windows doesn't need it)
+# create the directory manually:
+mkdir ircd\data
+
+# then run:
+docker compose up
+```
+
+**option 3: older Windows (without WSL2)**
+```powershell
+# install VirtualBox + Vagrant, or use Docker Toolbox (legacy)
+# or upgrade to Windows 10/11 for better Docker support
 ```
 
 **setup:**
