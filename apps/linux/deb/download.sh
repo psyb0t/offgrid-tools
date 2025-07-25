@@ -135,7 +135,7 @@ log "🐳 Starting clean Docker container in background..."
 
 # Use Ubuntu base image
 docker_image="${OS_NAME}:${OS_VERSION}"
-log "  Using Ubuntu base image: $docker_image"
+log "🖥️  Using Ubuntu base image: $docker_image"
 
 container_name="offgrid-tools-deb-downloader"
 
@@ -288,7 +288,7 @@ for package in "${PACKAGES[@]}"; do
         rm -f "$temp_raw" "$temp_urls" "$temp_clean"
         continue
     fi
-    
+
     # Show URL count
     if [[ -s "$temp_clean" ]]; then
         url_count=$(wc -l < "$temp_clean")
@@ -465,17 +465,9 @@ download_success=0
 download_skipped=0
 download_failed=0
 
-if [[ -f "$SUCCESS_FILE" ]]; then
-    download_success=$(grep -c . "$SUCCESS_FILE" 2>/dev/null || echo 0)
-fi
-
-if [[ -f "$SKIPPED_FILE" ]]; then
-    download_skipped=$(grep -c . "$SKIPPED_FILE" 2>/dev/null || echo 0)
-fi
-
-if [[ -f "$FAILED_FILE" ]]; then
-    download_failed=$(grep -c . "$FAILED_FILE" 2>/dev/null || echo 0)
-fi
+[[ -f "$SUCCESS_FILE" ]] && download_success=$(wc -l < "$SUCCESS_FILE" 2>/dev/null | tr -d ' ')
+[[ -f "$SKIPPED_FILE" ]] && download_skipped=$(wc -l < "$SKIPPED_FILE" 2>/dev/null | tr -d ' ')
+[[ -f "$FAILED_FILE" ]] && download_failed=$(wc -l < "$FAILED_FILE" 2>/dev/null | tr -d ' ')
 
 # Count total files we have now
 total_files=$(ls *.deb 2>/dev/null | wc -l || echo 0)
