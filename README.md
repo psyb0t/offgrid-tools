@@ -7,7 +7,10 @@ fuck the grid 🖕 Docker Compose setup for when the internet dies and you still
 - `docker-compose.yml` - your entire digital survival kit 🛠️
 - `save-docker-images.sh` / `load-docker-images.sh` - smuggle containers like digital contraband 🏴‍☠️
 - `create-zim.sh` - turn any website into offline archives 🕷️
-- `apps/` - offline package installers for when package managers fail you 📦
+- `apps/linux/` - offline debian/ubuntu package downloaders with dependency resolution 📦
+- `apps/android/` - essential APK collection for sideloading survival apps 📱
+- `zim/copy-to-android.sh` - transfer knowledge archives to android devices via ADB 📲
+- `apps/linux/utils.sh` - shared utilities for package download scripts (modular architecture) 🔧
 - service dirs with data folders for when you need to hoard information 💾
 
 ## 🚀 the stack
@@ -16,16 +19,55 @@ fuck the grid 🖕 Docker Compose setup for when the internet dies and you still
 - **Ollama** 🤖 - AI that runs on your hardware, not in some corpo datacenter
 - **Open WebUI** 💬 - talk to your AI without sending chat logs to surveillance capitalism
 - **Ollama Chat Party** 🎉 - RAG-enabled chat interface with document ingestion capabilities
+- **TheLounge** 💬 - web-based IRC client for connecting to IRC networks through your browser
+- **InspIRCd** 🌐 - IRC server for hosting your own chat networks and channels
 
 ## 🎯 getting started
 
-clone this repo, run `docker-compose up`, become ungovernable 😈
+**prerequisites:**
+- Docker and Docker Compose installed
+- sudo privileges for directory permissions
+
+**🪟 windows users:**
+use WSL2 (Windows Subsystem for Linux) for best compatibility:
+```powershell
+# install WSL2 with Ubuntu (run as Administrator)
+wsl --install -d Ubuntu
+
+# restart computer, then open Ubuntu terminal and run:
+sudo apt update && sudo apt install -y docker.io docker-compose-v2
+sudo usermod -aG docker $USER
+
+# logout/login to Ubuntu terminal, then continue with setup below
+```
+
+**setup:**
+```bash
+git clone [repo-url]
+cd offgrid-tools
+
+# fix IRC server permissions (required for InspIRCd)
+sudo chown -R 10000:10000 ./ircd/data
+
+# start the stack
+docker compose up
+
+# access your services:
+# - IRC chat: http://localhost:9000 (no login needed, auto-joins #general)
+# - AI chat: http://localhost:3000 
+# - Knowledge: http://localhost:8080
+# - RAG chat: http://localhost:8000 (password: offgrid123)
+```
+
+become ungovernable 😈
 
 ## 🌐 where to find your shit
 
 - **Kiwix** 📚 - `http://localhost:8080` - offline knowledge server with .zim archives
 - **Open WebUI** 💬 - `http://localhost:3000` - chatgpt-like interface for ollama models
 - **Ollama Chat Party** 🎉 - `http://localhost:8000` - RAG chat with document uploads (password: `offgrid123`)
+- **TheLounge** 💬 - `http://localhost:9000` - web interface for IRC networks (persistent connections via browser)
+- **InspIRCd** 🌐 - `localhost:6667` (plain) / `localhost:6697` (SSL) - IRC server for network chat
 - **Ollama API** 🤖 - `http://localhost:11434` - raw AI endpoint for API access
 
 ### 💬 open webUI features
@@ -99,7 +141,18 @@ use `create-zim.sh` to turn any website into a .zim file:
 ./create-zim.sh http://localhost:3000 my-local-app
 ```
 
-the script handles everything: pulls the zimit docker image, validates urls, creates directories, shows progress. works with any website that doesn't actively hate crawlers.
+**dependencies:** Docker (checks daemon status), validates URLs and worker count (1-100)
+
+the script handles everything: pulls the zimit docker image, validates urls, creates directories, shows progress. works with any website that doesn't actively hate crawlers. includes help with `./create-zim.sh --help`.
+
+### transfer to android 📱
+
+use `zim/copy-to-android.sh` to transfer ZIM files to Android Kiwix app:
+
+```bash
+cd zim
+./copy-to-android.sh data/my-archive.zim  # requires ADB and USB debugging
+```
 
 ## 🤖 getting AI models
 
@@ -107,6 +160,7 @@ the script handles everything: pulls the zimit docker image, validates urls, cre
 
 - NVIDIA GPU with docker GPU support (nvidia-container-toolkit) for best performance
 - verify GPU access: `nvidia-smi`
+- docker-compose.yml pre-configured with nvidia-docker GPU support
 
 **pull models (requires internet):**
 
@@ -149,6 +203,45 @@ docker exec offgrid-tools-ollama ollama show llama3.2:1b
 
 models are stored in `./ollama/data/` and persist between container restarts for offline use.
 
+## 💬 IRC chat network
+
+run your own private IRC network for local/network communication when other services fail.
+
+**components:**
+
+- **InspIRCd server** 🌐 - hosts IRC channels and manages connections
+- **TheLounge web interface** 💬 - shared web-based IRC interface (multi-user)
+
+**connection details:**
+
+- **IRC server**: `localhost:6667` (plain text) or `localhost:6697` (SSL/TLS)
+- **web interface**: `http://localhost:9000` - access IRC through browser with persistent connections
+
+**getting started:**
+
+1. **fix permissions first**: `sudo chown -R 10000:10000 ./ircd/data` (required for InspIRCd to write config files)
+2. **start services**: `docker compose up` - wait for InspIRCd to finish loading modules  
+3. **access public interface**: anyone goes to `http://your-ip:9000` - no login required, automatically connects to local IRC
+4. **start chatting**: users automatically join `#general` channel and can create new channels with `/join #channelname`
+5. **create channels**: type `/join #tech`, `/join #random`, etc. to make new channels - first person becomes channel operator
+6. **invite others**: share the URL `http://your-ip:9000` - everyone sees the same channels and chats together
+
+**configuration details:**
+- TheLounge runs in **public mode** (no accounts needed)
+- **auto-connects** to local InspIRCd server (`ircd:6667`)
+- **auto-joins** `#general` channel on connection
+- **temporary sessions** - IRC connection ends when browser closes (trade-off for no-login convenience)
+- **restart thelounge** if you modify config: `docker compose restart thelounge`
+
+**advanced usage:**
+
+- **external IRC clients**: connect xchat, mIRC, weechat to `localhost:6667`
+- **network access**: other machines connect to `your-ip:6667` (IRC) and `your-ip:9000` (web)
+- **persistence**: TheLounge keeps everyone connected even when browsers are closed  
+- **multi-user**: shared TheLounge instance - everyone sees the same channels and chats together
+
+**configuration:** IRC server settings in `./ircd/data/` directory, TheLounge settings in `./thelounge/data/`
+
 ## 📦 offline package management
 
 when package managers fail you and repos go dark, this is your lifeline. download packages when you have internet, install them when you don't.
@@ -180,7 +273,7 @@ cd apps/linux/deb
 
 ```bash
 cd apps/linux/deb
-./install.sh  # installs all downloaded packages
+sudo ./install.sh  # installs all downloaded packages (requires sudo for dpkg)
 ```
 
 **advanced features:**
@@ -195,10 +288,12 @@ cd apps/linux/deb
 - **clean interface**: minimal logging with emoji progress indicators and full URL visibility
 - **error handling**: detailed error reporting with specific failure reasons (404, timeout, DNS errors)
 - **resumable downloads**: skips already downloaded files automatically
+- **interactive cleanup**: prompts to delete existing files before downloading
+- **automatic dependency fixing**: runs `apt-get install -f` to resolve broken dependencies after installation
 
 **how it works:**
 
-the system spins up a clean Docker container matching your OS (Ubuntu uses base image, Debian uses `-slim`), silently sets up all required repositories, tests each package individually for dependency resolution using `apt-get --print-uris`, then downloads successful packages with all their dependencies to a unified directory. using clean base images ensures all dependencies are captured, including basic packages like python3.
+the system spins up a clean Docker container matching your OS (uses `${OS_NAME}:${OS_VERSION}` format), silently sets up all required repositories (Docker official, Go PPA, VirtualBox Oracle), tests each package individually for dependency resolution using `apt-get --print-uris`, then downloads successful packages with all their dependencies to a unified directory. using clean base images ensures all dependencies are captured, including basic packages like python3.
 
 **technical details:**
 
@@ -214,17 +309,19 @@ the system spins up a clean Docker container matching your OS (Ubuntu uses base 
 
 essential apps for when google play store fails you. curated collection of survival-focused, offline-ready applications.
 
+**dependencies:** curl, file command (optional for APK verification)
+
 **step 1:** download all essential apps:
 
 ```bash
 cd apps/android/apk
-./download.sh  # downloads curated collection of offline-ready apps
+./download.sh  # downloads curated collection of offline-ready apps (prompts to clean existing files)
 ```
 
 **step 2:** install to android device (connect it to usb first and enable usb debugging):
 
 ```bash
-./install.sh   # installs all APKs via ADB automatically
+./install.sh   # installs all APKs via ADB automatically (detects multiple devices, auto-reinstalls existing apps)
 ```
 
 **included survival apps:**
@@ -291,6 +388,8 @@ everything important lives in these folders:
 - `./ollama/data/` - AI models and config (maps to `/root/.ollama` in container)
 - `./openwebui/data/` - user accounts, chat history, settings, uploads, vector_db
 - `./ollama-chat-party/data/` - documents for RAG ingestion and indexing
+- `./thelounge/data/` - IRC web client settings, user accounts, chat logs
+- `./ircd/data/` - IRC server configuration files and settings
 - `./apps/linux/deb/*/data/` - offline linux packages organized by OS/architecture
 - `./apps/android/apk/data/` - offline android applications ready for sideloading
 - `./docker-images/` - saved container images for air-gapped deployment
@@ -303,6 +402,8 @@ offgrid-tools/
 ├── ollama/data/          # AI models and configuration
 ├── openwebui/data/       # Web UI data and conversations
 ├── ollama-chat-party/data/ # RAG documents for context
+├── thelounge/data/       # IRC web client settings and logs
+├── ircd/data/            # IRC server configuration
 ├── apps/
 │   ├── linux/deb/*/data/ # Linux packages by OS/arch
 │   └── android/apk/data/ # Android APK files
@@ -311,6 +412,63 @@ offgrid-tools/
 
 back these up. when the apocalypse comes you'll thank yourself.
 
-the `save-docker-images.sh` script includes zimit for website archiving, plus all the usual suspects (offgrid-tools-kiwix, offgrid-tools-ollama, offgrid-tools-openwebui, offgrid-tools-ollama-chat-party). run it periodically to keep your container stash fresh.
+the `save-docker-images.sh` script includes zimit for website archiving, plus all the usual suspects (offgrid-tools-kiwix, offgrid-tools-ollama, offgrid-tools-openwebui, offgrid-tools-ollama-chat-party, offgrid-tools-thelounge, offgrid-tools-ircd). intelligently checks for updates (compares image IDs) and only saves when changed. `load-docker-images.sh` provides detailed progress tracking and error counting. run save script periodically to keep your container stash fresh.
+
+## 🚨 troubleshooting
+
+### IRC server won't start
+
+**problem:** InspIRCd fails with "Can't write to volume! Please change owner to uid 10000"
+
+**solution:**
+```bash
+# fix directory permissions
+sudo chown -R 10000:10000 ./ircd/data
+
+# restart the stack
+docker compose down
+docker compose up
+```
+
+**why:** InspIRCd container runs as user ID 10000 internally and needs write access to create config files (inspircd.conf, SSL certificates)
+
+### docker permission errors
+
+if you see permission denied errors for other services, check the container's required UID:
+
+```bash
+# check what user the container expects
+docker compose logs [service-name]
+
+# fix permissions accordingly
+sudo chown -R [uid]:[gid] ./[service]/data
+```
+
+common UIDs:
+- InspIRCd: 10000:10000
+- most others: use your regular user (1000:1000) or default docker permissions
+
+### thelounge still asking for login
+
+**problem:** TheLounge shows login screen instead of direct IRC access
+
+**solution:**
+```bash
+# restart thelounge to pick up config changes
+docker compose restart thelounge
+
+# if still not working, check config file
+cat ./thelounge/data/config.js | grep "public:"
+# should show: public: true,
+```
+
+### services won't connect
+
+**problem:** services can't reach each other (ollama, IRC connections fail)
+
+**solution:**
+- ensure all services are in the same docker network (`offgrid`)
+- wait for all services to fully start before testing connections
+- check service names match docker-compose.yml (use `ircd:6667`, not `localhost:6667` from inside containers)
 
 no tracking 🚫 no telemetry 🚫 no bullshit 🚫 just tools that work when everything else fails 💀

@@ -73,6 +73,36 @@ services:
     depends_on:
       - ollama
 
+  thelounge:
+    image: thelounge/thelounge:latest
+    container_name: offgrid-tools-thelounge
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./thelounge/data:/var/opt/thelounge
+    restart: unless-stopped
+    networks:
+      - offgrid
+    environment:
+      - THELOUNGE_HOME=/var/opt/thelounge
+      - THELOUNGE_PORT=9000
+      - THELOUNGE_HOST=0.0.0.0
+      - THELOUNGE_PUBLIC=true
+    depends_on:
+      - ircd
+
+  ircd:
+    image: inspircd/inspircd-docker:latest
+    container_name: offgrid-tools-ircd
+    ports:
+      - "6667:6667"
+      - "6697:6697"
+    volumes:
+      - ./ircd/data:/inspircd/conf
+    restart: unless-stopped
+    networks:
+      - offgrid
+
 networks:
   offgrid:
     driver: bridge

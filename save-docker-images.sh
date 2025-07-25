@@ -13,6 +13,8 @@ echo "  🌐 Zimit for web content archiving"
 echo "  🤖 Ollama for local AI models"
 echo "  🌐 Open WebUI for AI chat interface"
 echo "  🎉 Ollama Chat Party for RAG-enabled chat"
+echo "  💬 TheLounge for web-based IRC client"
+echo "  🌐 InspIRCd for IRC server hosting"
 echo "  🐍 Python runtime (full version)"
 echo "  🐹 Go development environment (full version)"
 echo "  🖥️  Ubuntu base OS for containers"
@@ -31,6 +33,10 @@ IMAGES=(
     "ollama/ollama:latest"          # Local AI model server
     "ghcr.io/open-webui/open-webui:main"  # Web UI for Ollama
     "psyb0t/ollama-chat-party:latest"      # RAG-enabled chat interface
+    
+    # IRC chat network
+    "thelounge/thelounge:latest"    # Web-based IRC client
+    "inspircd/inspircd-docker:latest"      # IRC server
     
     # Programming language runtimes (full versions)
     "python:3.12"                   # Latest stable Python (full)
@@ -123,6 +129,8 @@ echo "  🌐 Zimit: ghcr.io/openzim/zimit:latest"
 echo "  🤖 Ollama: ollama/ollama:latest"
 echo "  🌐 Open WebUI: ghcr.io/open-webui/open-webui:main"
 echo "  🎉 Chat Party: psyb0t/ollama-chat-party:latest"
+echo "  💬 TheLounge: thelounge/thelounge:latest"
+echo "  🌐 InspIRCd: inspircd/inspircd-docker:latest"
 echo "  🐍 Python: python:3.12 (full)"
 echo "  🐹 Go: golang:1.24 (full)"
 echo "  🖥️  Base: ubuntu:22.04"
