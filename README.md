@@ -4,17 +4,31 @@ fuck the grid 🖕 Docker Compose setup for when the internet dies and you still
 
 ## 📋 table of contents
 
+- [📋 what the fuck is this anyway](#-what-the-fuck-is-this-anyway) 🎯
 - [📦 what's in the box](#-whats-in-the-box)
 - [🚀 the stack](#-the-stack)
 - [🎯 getting started](#-getting-started)
 - [🌐 where to find your shit](#-where-to-find-your-shit)
-- [📋 what the fuck is this anyway](#-what-the-fuck-is-this-anyway)
 - [🏴‍☠️ getting .zim files](#️-getting-zim-files)
 - [🤖 getting AI models](#-getting-ai-models)
 - [💬 IRC chat network](#-irc-chat-network)
 - [📦 offline package management](#-offline-package-management)
 - [💾 data persistence](#-data-persistence)
 - [🚨 troubleshooting](#-troubleshooting)
+
+## 📋 what the fuck is this anyway
+
+this is a self-contained digital bunker for when shit hits the fan. internet goes down? government censors your access? ISP decides to fuck with you? doesn't matter. this stack runs entirely on your local machine.
+
+**Kiwix** 📚 serves up compressed knowledge archives (.zim files). download wikipedia, stack overflow, project gutenberg, medical texts, survival guides, whatever. all searchable offline. it's like having the library of alexandria on your laptop but without the fire risk.
+
+**Ollama** 🤖 is your local AI that doesn't phone home. runs llama, mistral, code models, whatever. no api keys, no monthly subscriptions, no sending your private thoughts to openai's data mining operation. just raw silicon doing math for you.
+
+**Open WebUI** 💬 gives you a chatgpt-like interface that talks to your local ollama instance. upload documents, ask questions, generate code, whatever. all stays on your hardware.
+
+**Ollama Chat Party** 🎉 is another chat interface with enhanced RAG (retrieval-augmented generation) capabilities. drop documents in the `/documents` folder and it'll ingest them for context-aware conversations. password protected because even in the apocalypse you need some security.
+
+the beauty is everything talks to everything else through docker's internal network. no external dependencies once it's running.
 
 ## 📦 what's in the box
 
@@ -25,7 +39,10 @@ fuck the grid 🖕 Docker Compose setup for when the internet dies and you still
 - `apps/android/` - essential APK collection for sideloading survival apps 📱
 - `zim/copy-to-android.sh` - transfer knowledge archives to android devices via ADB 📲
 - `apps/linux/utils.sh` - shared utilities for package download scripts (modular architecture) 🔧
+- `ircd/data/` - InspIRCd server configuration scripts (services, operators, linking) ⚙️
+- `thelounge/data/config.js` - IRC web client configuration (public mode enabled) 🌐
 - service dirs with data folders for when you need to hoard information 💾
+- `.readme` - default credentials file (remove after setup for security) 🔒
 
 ## 🚀 the stack
 
@@ -123,6 +140,12 @@ modern chatgpt-like interface with:
 
 first user becomes admin and can manage accounts, configure settings, control model access, and set up custom prompts.
 
+**default admin account (if enabled):**
+- username: `admin`
+- email: `admin@admin.com` 
+- password: `pass`
+- **security note**: change these credentials immediately after first login
+
 ### 🎉 ollama chat party features
 
 RAG-enabled chat interface with enhanced document processing:
@@ -132,20 +155,6 @@ RAG-enabled chat interface with enhanced document processing:
 - supports: text files (.txt, .md), web content (.html, .htm), PDFs, word docs (.docx), libreoffice (.odt)
 - password protected: `offgrid123`
 - restart service to reindex new documents: `docker compose restart ollama-chat-party`
-
-## 📋 what the fuck is this anyway
-
-this is a self-contained digital bunker for when shit hits the fan. internet goes down? government censors your access? ISP decides to fuck with you? doesn't matter. this stack runs entirely on your local machine.
-
-**Kiwix** 📚 serves up compressed knowledge archives (.zim files). download wikipedia, stack overflow, project gutenberg, medical texts, survival guides, whatever. all searchable offline. it's like having the library of alexandria on your laptop but without the fire risk.
-
-**Ollama** 🤖 is your local AI that doesn't phone home. runs llama, mistral, code models, whatever. no api keys, no monthly subscriptions, no sending your private thoughts to openai's data mining operation. just raw silicon doing math for you.
-
-**Open WebUI** 💬 gives you a chatgpt-like interface that talks to your local ollama instance. upload documents, ask questions, generate code, whatever. all stays on your hardware.
-
-**Ollama Chat Party** 🎉 is another chat interface with enhanced RAG (retrieval-augmented generation) capabilities. drop documents in the `/documents` folder and it'll ingest them for context-aware conversations. password protected because even in the apocalypse you need some security.
-
-the beauty is everything talks to everything else through docker's internal network. no external dependencies once it's running.
 
 ## 🏴‍☠️ getting .zim files
 
@@ -270,6 +279,13 @@ run your own private IRC network for local/network communication when other serv
 - **temporary sessions** - IRC connection ends when browser closes (trade-off for no-login convenience)
 - **restart thelounge** if you modify config: `docker compose restart thelounge`
 
+**InspIRCd advanced configuration:**
+- **SSL support**: configured with auto-generated certificates on port 6697
+- **services integration**: ready for IRC services like NickServ/ChanServ (see `./ircd/data/services.sh`)
+- **server linking**: can connect to other IRC networks (see `./ircd/data/links.sh`)
+- **operator accounts**: IRC admin access available (see `./ircd/data/opers.sh`)
+- **custom configuration**: modify `./ircd/data/config.sh` for advanced settings
+
 **advanced usage:**
 
 - **external IRC clients**: connect xchat, mIRC, weechat to `localhost:6667`
@@ -304,7 +320,16 @@ cd apps/linux/deb
 ./download.sh     # downloads ALL packages with dependencies (10 parallel downloads)
 ./download.sh 20  # faster with 20 parallel downloads
 ./download.sh 5   # slower but lighter on network with 5 parallel downloads
+
+# advanced usage
+PARALLEL_LIMIT=15 ./download.sh    # set custom parallel limit via environment
+./download.sh --force              # force re-download existing packages
 ```
+
+**logging and debugging:**
+- detailed logs saved to `download.sh.log` in same directory
+- real-time progress with emoji indicators and package resolution status
+- comprehensive error reporting with specific failure reasons (404, timeout, DNS errors)
 
 **install packages offline:**
 
@@ -451,6 +476,13 @@ back these up. when the apocalypse comes you'll thank yourself.
 
 the `save-docker-images.sh` script includes zimit for website archiving, plus all the usual suspects (offgrid-tools-kiwix, offgrid-tools-ollama, offgrid-tools-openwebui, offgrid-tools-ollama-chat-party, offgrid-tools-thelounge, offgrid-tools-ircd). intelligently checks for updates (compares image IDs) and only saves when changed. `load-docker-images.sh` provides detailed progress tracking and error counting. run save script periodically to keep your container stash fresh.
 
+**image management features:**
+- **intelligent updating**: only downloads/saves when image IDs change
+- **size reporting**: shows compressed .tar file sizes for planning
+- **resume capability**: skips existing tar files automatically
+- **comprehensive coverage**: includes base images (Ubuntu, Python, Go) for development
+- **offline verification**: `load-docker-images.sh` validates all images before loading
+
 ## 🚨 troubleshooting
 
 ### IRC server won't start
@@ -507,5 +539,39 @@ cat ./thelounge/data/config.js | grep "public:"
 - ensure all services are in the same docker network (`offgrid`)
 - wait for all services to fully start before testing connections
 - check service names match docker-compose.yml (use `ircd:6667`, not `localhost:6667` from inside containers)
+
+### download scripts failing
+
+**problem:** package downloads fail with 404 or timeout errors
+
+**solution:**
+```bash
+# check the log file for specific errors
+cat apps/linux/deb/download.sh.log
+
+# retry with lower parallel limit
+cd apps/linux/deb
+./download.sh 5
+
+# force clean download
+rm -rf data/
+./download.sh --force
+```
+
+### GPU not detected
+
+**problem:** Ollama not using GPU acceleration
+
+**solution:**
+```bash
+# verify GPU access
+nvidia-smi
+
+# check if nvidia-container-toolkit is installed
+docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi
+
+# restart docker service
+sudo systemctl restart docker
+```
 
 no tracking 🚫 no telemetry 🚫 no bullshit 🚫 just tools that work when everything else fails 💀
