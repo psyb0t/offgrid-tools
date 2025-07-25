@@ -2,6 +2,20 @@
 
 fuck the grid 🖕 Docker Compose setup for when the internet dies and you still need to get shit done.
 
+## 📋 table of contents
+
+- [📦 what's in the box](#-whats-in-the-box)
+- [🚀 the stack](#-the-stack)
+- [🎯 getting started](#-getting-started)
+- [🌐 where to find your shit](#-where-to-find-your-shit)
+- [📋 what the fuck is this anyway](#-what-the-fuck-is-this-anyway)
+- [🏴‍☠️ getting .zim files](#️-getting-zim-files)
+- [🤖 getting AI models](#-getting-ai-models)
+- [💬 IRC chat network](#-irc-chat-network)
+- [📦 offline package management](#-offline-package-management)
+- [💾 data persistence](#-data-persistence)
+- [🚨 troubleshooting](#-troubleshooting)
+
 ## 📦 what's in the box
 
 - `docker-compose.yml` - your entire digital survival kit 🛠️
@@ -89,7 +103,7 @@ become ungovernable 😈
 - **Kiwix** 📚 - `http://localhost:8080` - offline knowledge server with .zim archives
 - **Open WebUI** 💬 - `http://localhost:3000` - chatgpt-like interface for ollama models
 - **Ollama Chat Party** 🎉 - `http://localhost:8000` - RAG chat with document uploads (password: `offgrid123`)
-- **TheLounge** 💬 - `http://localhost:9000` - web interface for IRC networks (persistent connections via browser)
+- **TheLounge** 💬 - `http://localhost:9000` - web interface for IRC networks (no login needed, auto-joins #general)
 - **InspIRCd** 🌐 - `localhost:6667` (plain) / `localhost:6697` (SSL) - IRC server for network chat
 - **Ollama API** 🤖 - `http://localhost:11434` - raw AI endpoint for API access
 
@@ -117,7 +131,7 @@ RAG-enabled chat interface with enhanced document processing:
 - drop documents in `/documents` folder for context-aware conversations
 - supports: text files (.txt, .md), web content (.html, .htm), PDFs, word docs (.docx), libreoffice (.odt)
 - password protected: `offgrid123`
-- restart service to reindex new documents: `docker-compose restart ollama-chat-party`
+- restart service to reindex new documents: `docker compose restart ollama-chat-party`
 
 ## 📋 what the fuck is this anyway
 
