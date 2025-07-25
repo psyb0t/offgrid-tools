@@ -1,6 +1,7 @@
 services:
   kiwix:
     image: ghcr.io/kiwix/kiwix-serve:latest
+    container_name: offgrid-tools-kiwix
     ports:
       - "8080:8080"
     volumes:
@@ -14,6 +15,7 @@ services:
 
   ollama:
     image: ollama/ollama:latest
+    container_name: offgrid-tools-ollama
     ports:
       - "11434:11434"
     volumes:
@@ -33,6 +35,7 @@ services:
 
   openwebui:
     image: ghcr.io/open-webui/open-webui:main
+    container_name: offgrid-tools-openwebui
     ports:
       - "3000:8080"
     volumes:
@@ -47,6 +50,7 @@ services:
 
   ollama-chat-party:
     image: psyb0t/ollama-chat-party:latest
+    container_name: offgrid-tools-ollama-chat-party
     tty: true
     ports:
       - "8000:8000"
