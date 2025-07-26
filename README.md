@@ -26,6 +26,7 @@ This is a completely self-contained offline environment that runs on Docker. Whe
 - **Local AI chat** (no OpenAI bullshit needed)
 - **Offline Wikipedia & web archives** (actual useful knowledge)
 - **IRC server & client** (real chat, not surveillance capitalism)
+- **Audio streaming & radio** (broadcast to your local network, monitor emergency frequencies)
 - **Development tools** (code without the cloud)
 - **Mobile app installer** (side-load apps when Google Play is down)
 
@@ -35,16 +36,11 @@ The whole thing is designed to work with **zero internet connection**. Everythin
 
 ```bash
 # Clone this repo
-git clone <this-repo>
+git clone https://github.com/psyb0t/offgrid-tools.git
 cd offgrid-tools
 
-# Start the basic services
+# Start the services
 docker-compose up
-
-# Access stuff:
-# - Web archives: http://localhost:8080
-# - AI chat: http://localhost:3000
-# - IRC web client: http://localhost:9000
 ```
 
 But seriously, read the rest or you'll be fucked when you actually need this offline.
@@ -59,6 +55,7 @@ But seriously, read the rest or you'll be fucked when you actually need this off
 | **Ollama Chat Party** | 8000  | Multi-user AI chat room with shared history & RAG | Ollama          |
 | **InspIRCd**          | 6667  | IRC server for local network chat                 | None            |
 | **TheLounge**         | 9000  | Web-based IRC client                              | InspIRCd        |
+| **Icecast**           | 8001  | Audio streaming server for radio/podcasts         | None            |
 
 ## Preparing for the Apocalypse
 
@@ -69,7 +66,7 @@ The repo itself is tiny (~1MB), but the real power comes from downloading all th
 Save all the container images locally so you don't need to pull from registries:
 
 ```bash
-# Download ~13GB of container images
+# Download container images
 ./save-docker-images.sh
 
 # Later, load them on an offline machine
@@ -82,6 +79,7 @@ This downloads:
 - Web UIs for AI chat
 - Offline content server (Kiwix)
 - IRC server & client
+- Audio streaming server (Icecast)
 - Development environments (Python, Go, Ubuntu)
 
 ### Android Apps
@@ -118,7 +116,7 @@ Pre-download Linux packages for offline installation:
 ```bash
 cd apps/linux/deb
 
-# Download ~700MB of .deb packages
+# Download .deb packages
 ./download.sh
 
 # Install them when offline
@@ -134,6 +132,11 @@ sudo ./install.sh
 - Terminal emulator (Terminator)
 - VirtualBox for VMs
 - Media tools (FFmpeg, GIMP)
+- System monitoring (htop, iotop, nethogs)
+- Network analysis (Wireshark, nmap)
+- File sync & backup (rsync, BorgBackup, Vorta GUI)
+- Software Defined Radio (GQRX)
+- Audio streaming (BUTT, Mixxx)
 
 ### Web Content Archives
 
@@ -175,13 +178,15 @@ Once running, access services at:
 - **http://localhost:8080** - Kiwix (offline web content)
 - **http://localhost:3000** - Open WebUI (AI chat interface)
 - **http://localhost:8000** - Ollama Chat Party (multi-user AI chat room with RAG support)
+- **http://localhost:8001** - Icecast (audio streaming server)
 - **http://localhost:9000** - TheLounge (IRC web client)
 
 **Default credentials:**
 
-- Open WebUI: `admin@admin.com` / `pass`
+- Open WebUI: Create your own admin account on first visit
 - IRC operator: `offgrid` / `offgrid123`
 - Chat Party: password is `offgrid123`
+- Icecast: all passwords are `offgrid123`
 
 ## Data & Storage
 

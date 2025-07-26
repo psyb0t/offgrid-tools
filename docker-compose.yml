@@ -102,6 +102,20 @@ services:
     depends_on:
       - inspircd
 
+  icecast:
+    image: libretime/icecast:latest
+    container_name: offgrid-tools-icecast
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+    networks:
+      - offgrid
+    environment:
+      - ICECAST_SOURCE_PASSWORD=offgrid123
+      - ICECAST_ADMIN_PASSWORD=offgrid123
+      - ICECAST_RELAY_PASSWORD=offgrid123
+      - ICECAST_PASSWORD=offgrid123
+
 networks:
   offgrid:
     driver: bridge

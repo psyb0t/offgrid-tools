@@ -6,18 +6,31 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 IMAGES_DIR="${SCRIPT_DIR}/docker-images"
 
-echo "=== Saving Docker Images for Offline Use ==="
-echo "This will download and save the following images:"
-echo "  📚 Kiwix server for offline content"
-echo "  🌐 Zimit for web content archiving"
-echo "  🤖 Ollama for local AI models"
-echo "  🌐 Open WebUI for AI chat interface"
-echo "  🎉 Ollama Chat Party for RAG-enabled chat"
-echo "  💬 TheLounge for web-based IRC client"
-echo "  🌐 InspIRCd for IRC server hosting"
-echo "  🐍 Python runtime (full version)"
-echo "  🐹 Go development environment (full version)"
-echo "  🖥️  Ubuntu base OS for containers"
+# Function to display image information
+print_images_info() {
+    local show_names=${1:-false}
+    
+    if [[ "$show_names" == "false" ]]; then
+        echo "=== Saving Docker Images for Offline Use ==="
+        echo "This will download and save the following images:"
+    else
+        echo "📋 Available images for offline use:"
+    fi
+    
+    echo "  📚 Kiwix: $([ "$show_names" == "true" ] && echo "ghcr.io/kiwix/kiwix-serve:latest" || echo "server for offline content")"
+    echo "  🌐 Zimit: $([ "$show_names" == "true" ] && echo "ghcr.io/openzim/zimit:latest" || echo "for web content archiving")"
+    echo "  🤖 Ollama: $([ "$show_names" == "true" ] && echo "ollama/ollama:latest" || echo "for local AI models")"
+    echo "  🌐 Open WebUI: $([ "$show_names" == "true" ] && echo "ghcr.io/open-webui/open-webui:main" || echo "for AI chat interface")"
+    echo "  🎉 Chat Party: $([ "$show_names" == "true" ] && echo "psyb0t/ollama-chat-party:latest" || echo "for RAG-enabled chat")"
+    echo "  💬 TheLounge: $([ "$show_names" == "true" ] && echo "thelounge/thelounge:latest" || echo "for web-based IRC client")"
+    echo "  🌐 InspIRCd: $([ "$show_names" == "true" ] && echo "inspircd/inspircd-docker:latest" || echo "for IRC server hosting")"
+    echo "  📻 Icecast: $([ "$show_names" == "true" ] && echo "libretime/icecast:latest" || echo "for audio streaming")"
+    echo "  🐍 Python: $([ "$show_names" == "true" ] && echo "python:3.12" || echo "runtime")"
+    echo "  🐹 Go: $([ "$show_names" == "true" ] && echo "golang:1.24" || echo "development environment")"
+    echo "  🖥️  Base: $([ "$show_names" == "true" ] && echo "ubuntu:22.04" || echo "Ubuntu OS for containers")"
+}
+
+print_images_info
 echo ""
 
 # Create images directory if it doesn't exist
@@ -37,6 +50,9 @@ IMAGES=(
     # IRC chat network
     "thelounge/thelounge:latest"    # Web-based IRC client
     "inspircd/inspircd-docker:latest"      # IRC server
+    
+    # Audio streaming
+    "libretime/icecast:latest"      # Audio streaming server
     
     # Programming language runtimes (full versions)
     "python:3.12"                   # Latest stable Python (full)
@@ -62,8 +78,14 @@ for image in "${IMAGES[@]}"; do
     local_image_id=$(docker images -q "$image" 2>/dev/null)
     
     if [[ -z "$local_image_id" ]]; then
-        echo "  ↳ Image not found locally, will pull"
-        needs_update=true
+        echo "  ↳ Image not found locally, pulling..."
+        if docker pull "$image"; then
+            echo "  ↳ Pull successful"
+            needs_update=true
+        else
+            echo "  ❌ Failed to pull $image"
+            exit 1
+        fi
     else
         # Check if there's a newer version available
         echo "  ↳ Checking for updates..."
@@ -123,16 +145,6 @@ echo "Total size:"
 du -sh "$IMAGES_DIR"
 
 echo ""
-echo "📋 Available images for offline use:"
-echo "  📚 Kiwix: ghcr.io/kiwix/kiwix-serve:latest"
-echo "  🌐 Zimit: ghcr.io/openzim/zimit:latest"
-echo "  🤖 Ollama: ollama/ollama:latest"
-echo "  🌐 Open WebUI: ghcr.io/open-webui/open-webui:main"
-echo "  🎉 Chat Party: psyb0t/ollama-chat-party:latest"
-echo "  💬 TheLounge: thelounge/thelounge:latest"
-echo "  🌐 InspIRCd: inspircd/inspircd-docker:latest"
-echo "  🐍 Python: python:3.12 (full)"
-echo "  🐹 Go: golang:1.24 (full)"
-echo "  🖥️  Base: ubuntu:22.04"
+print_images_info true
 echo ""
 echo "Use ./load-docker-images.sh on offline systems to load these images"
