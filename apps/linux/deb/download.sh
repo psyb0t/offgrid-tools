@@ -240,7 +240,7 @@ cleanup() {
     exit 130
 }
 # Simple trap - tee was interfering with signals
-trap cleanup EXIT INT TERM
+trap cleanup INT TERM
 
 log "📋 Setting up repositories in container..."
 
