@@ -16,8 +16,8 @@ services:
   ollama:
     image: ollama/ollama:latest
     container_name: offgrid-tools-ollama
-    ports:
-      - "11434:11434"
+    expose:
+      - 11434
     volumes:
       - ./ollama/data:/root/.ollama
     restart: unless-stopped
@@ -45,6 +45,7 @@ services:
       - offgrid
     environment:
       - OLLAMA_BASE_URL=http://ollama:11434
+      - HF_HUB_OFFLINE=1
     depends_on:
       - ollama
 
@@ -73,35 +74,33 @@ services:
     depends_on:
       - ollama
 
+  inspircd:
+    image: inspircd/inspircd-docker:latest
+    container_name: offgrid-tools-inspircd
+    user: "1000:1000"
+    expose:
+      - 6667
+    volumes:
+      - ./inspircd/conf:/inspircd/conf
+      - ./inspircd/logs:/inspircd/logs
+    restart: unless-stopped
+    networks:
+      - offgrid
+
   thelounge:
     image: thelounge/thelounge:latest
     container_name: offgrid-tools-thelounge
     ports:
       - "9000:9000"
     volumes:
-      - ./thelounge/data:/var/opt/thelounge
+      - ./thelounge:/var/opt/thelounge
     restart: unless-stopped
     networks:
       - offgrid
     environment:
       - THELOUNGE_HOME=/var/opt/thelounge
-      - THELOUNGE_PORT=9000
-      - THELOUNGE_HOST=0.0.0.0
-      - THELOUNGE_PUBLIC=true
     depends_on:
-      - ircd
-
-  ircd:
-    image: inspircd/inspircd-docker:latest
-    container_name: offgrid-tools-ircd
-    ports:
-      - "6667:6667"
-      - "6697:6697"
-    volumes:
-      - ./ircd/data:/inspircd/conf
-    restart: unless-stopped
-    networks:
-      - offgrid
+      - inspircd
 
 networks:
   offgrid:
