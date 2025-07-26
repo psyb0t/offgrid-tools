@@ -49,16 +49,29 @@ But seriously, read the rest or you'll be fucked when you actually need this off
 
 ## Services Overview
 
-| Service               | Port  | What it does                                      | Dependencies    |
-| --------------------- | ----- | ------------------------------------------------- | --------------- |
-| **Kiwix**             | 8080  | Serves offline web content (Wikipedia, etc.)      | None            |
-| **Ollama**            | 11434 | Local AI models (like ChatGPT but yours)          | GPU recommended |
-| **Open WebUI**        | 3000  | Pretty web interface for AI chat                  | Ollama          |
-| **Ollama Chat Party** | 8000  | Multi-user AI chat room with shared history & RAG | Ollama          |
-| **InspIRCd**          | 6667  | IRC server for local network chat                 | None            |
-| **TheLounge**         | 9000  | Web-based IRC client                              | InspIRCd        |
-| **Icecast**           | 8001  | Audio streaming server for radio/podcasts         | None            |
-| **File Server**       | 8002  | Download APKs, DEBs, ISOs via web browser         | None            |
+### Kiwix (Port 8000)
+Offline content server that serves ZIM archive files through a web interface. Reads ZIM files you place in `zim/data/` including Wikipedia dumps, educational materials, and archived websites. Essential for accessing knowledge when internet is unavailable. Simply visit the web interface to browse and search offline content - no additional setup required.
+
+### Ollama (Internal Port 11434)
+Local AI model server that runs language models completely offline on your hardware. Stores models and configuration in `ollama/data/` directory. Provides ChatGPT-like capabilities without sending data to external services. Not directly accessible from host - access through Open WebUI or Ollama Chat Party. Models are automatically downloaded on first use - larger models require more RAM and benefit from GPU acceleration.
+
+### Open WebUI (Port 8001)
+Web-based chat interface for Ollama that provides a modern ChatGPT-like experience. Stores user accounts, chat history, and preferences in `openwebui/data/`. Create your admin account on first visit, then start chatting with local AI models. Supports file uploads, conversation management, and multiple model selection.
+
+### Ollama Chat Party (Port 8002)
+Multi-user AI chat room where multiple people can chat with the same AI simultaneously, sharing conversation history. Supports RAG (Retrieval-Augmented Generation) with documents stored in `ollama-chat-party/data/`. Upload documents to enhance AI responses with your own knowledge base. Default password is `offgrid123`.
+
+### InspIRCd (Internal Port 6667)
+IRC server for local network chat and communication. Configuration stored in `inspircd/conf/` with logs in `inspircd/logs/`. Provides traditional IRC channels and private messaging within the Docker network. Not directly accessible from host - access through TheLounge web client. Operator credentials: `offgrid` / `offgrid123`.
+
+### TheLounge (Port 8003)
+Modern web-based IRC client that connects to the InspIRCd server. Configuration and user data stored in `thelounge/` directory. Provides a Discord-like interface for IRC with persistent connections, file sharing, and modern features. No additional setup needed - automatically connects to the local IRC server.
+
+### Icecast (Port 8004)
+Audio streaming server for broadcasting live audio streams to multiple listeners. Creates internet radio stations or live audio feeds. To stream audio, use source clients like BUTT (Broadcast Using This Tool) or Mixxx with server `localhost:8004` and password `offgrid123`. Listeners access streams at `http://localhost:8004/mountpoint`. Perfect for emergency broadcasts, local radio, or streaming music to your network.
+
+### File Server (Port 8005)
+Web-based file browser for downloading all offline content via HTTP. Serves files from `apps/*/data/`, `docker-images/`, `zim/data/`, and custom files from `file-server/other-files/`. Simply browse the web interface to download APKs, DEBs, ISOs, Docker images, or any custom files. Supports basic authentication - default credentials: `offgrid` / `offgrid123`.
 
 ## Preparing for the Apocalypse
 
