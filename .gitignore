@@ -30,3 +30,14 @@ Thumbs.db
 
 # Log files
 *.log
+
+# TheLounge - ignore everything except config.js
+thelounge/*
+!thelounge/config.js
+
+# InspIRCd - ignore everything except conf/motd.txt and conf/inspircd.conf
+inspircd/*
+!inspircd/conf/
+inspircd/conf/*
+!inspircd/conf/motd.txt
+!inspircd/conf/inspircd.conf
