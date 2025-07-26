@@ -80,7 +80,7 @@ The repo itself is tiny (~1MB), but the real power comes from downloading all th
 ### Quick Download Everything
 
 ```bash
-# Download everything at once (Docker images, APKs, packages, ISOs)
+# Download everything at once (Docker images, APKs, packages, ISOs, ZIM archives)
 ./trigger-downloads.sh
 ```
 
@@ -195,6 +195,15 @@ sudo ./install.sh
 #### Download Pre-made Archives
 
 Visit https://library.kiwix.org/ to browse and download ready-made ZIM archives including Wikipedia dumps, educational content, reference materials, and curated collections. Simply download the ZIM files and place them in `zim/data/`.
+
+#### Download Curated Archives
+
+```bash
+cd zim
+
+# Download essential development and survival content
+./download.sh
+```
 
 #### Create Custom Archives
 
