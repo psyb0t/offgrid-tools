@@ -116,6 +116,27 @@ services:
       - ICECAST_RELAY_PASSWORD=offgrid123
       - ICECAST_PASSWORD=offgrid123
 
+  file-server:
+    image: nginx:alpine
+    container_name: offgrid-tools-file-server
+    ports:
+      - "8002:8002"
+    volumes:
+      - ./file-server/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./file-server/entrypoint.sh:/entrypoint.sh:ro
+      - ./apps/android/apk/data:/var/www/html/apk:ro
+      - ./apps/linux/deb/data:/var/www/html/deb:ro
+      - ./apps/iso/data:/var/www/html/iso:ro
+      - ./docker-images:/var/www/html/docker-images:ro
+      - ./zim/data:/var/www/html/zim:ro
+      - ./file-server/other-files:/var/www/html/other-files
+    environment:
+      - FILE_SERVER_AUTH=offgrid:offgrid123
+    entrypoint: ["/entrypoint.sh"]
+    restart: unless-stopped
+    networks:
+      - offgrid
+
 networks:
   offgrid:
     driver: bridge

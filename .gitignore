@@ -2,8 +2,9 @@
 **/data/*
 !**/data/.gitkeep
 
-# Docker images archive
-docker-images/
+# Docker images archive - ignore all except .gitkeep
+docker-images/*
+!docker-images/.gitkeep
 
 # Logs
 *.log

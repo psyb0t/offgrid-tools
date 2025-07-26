@@ -58,6 +58,7 @@ But seriously, read the rest or you'll be fucked when you actually need this off
 | **InspIRCd**          | 6667  | IRC server for local network chat                 | None            |
 | **TheLounge**         | 9000  | Web-based IRC client                              | InspIRCd        |
 | **Icecast**           | 8001  | Audio streaming server for radio/podcasts         | None            |
+| **File Server**       | 8002  | Download APKs, DEBs, ISOs via web browser         | None            |
 
 ## Preparing for the Apocalypse
 
@@ -82,6 +83,7 @@ This downloads:
 - Offline content server (Kiwix)
 - IRC server & client
 - Audio streaming server (Icecast)
+- File server (Nginx)
 - Development environments (Python, Go, Ubuntu)
 
 ### Android Apps
@@ -208,6 +210,7 @@ Once running, access services at:
 - **http://localhost:3000** - Open WebUI (AI chat interface)
 - **http://localhost:8000** - Ollama Chat Party (multi-user AI chat room with RAG support)
 - **http://localhost:8001** - Icecast (audio streaming server)
+- **http://localhost:8002** - File Server (download APKs, DEBs, ISOs, ZIM files, Docker images, other files)
 - **http://localhost:9000** - TheLounge (IRC web client)
 
 **Default credentials:**
@@ -216,6 +219,7 @@ Once running, access services at:
 - IRC operator: `offgrid` / `offgrid123`
 - Chat Party: password is `offgrid123`
 - Icecast: all passwords are `offgrid123`
+- File Server: `offgrid` / `offgrid123` (can be changed with FILE_SERVER_AUTH env var)
 
 ## Data & Storage
 
@@ -229,6 +233,7 @@ apps/android/apk/data/    # Downloaded APK files
 apps/linux/deb/data/     # Downloaded .deb packages
 apps/iso/data/           # Downloaded ISO images
 docker-images/           # Saved Docker containers
+file-server/other-files/ # Custom files for web download
 ```
 
 Most of this is gitignored - the repo just has the scripts to download everything.
