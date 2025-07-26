@@ -106,6 +106,7 @@ cd apps/android/apk
 - **Briar Messenger** - Secure decentralized messaging via Bluetooth/WiFi without internet or servers. Essential for emergency communication when networks are down.
 - **Briar Mailbox** - Message relay service for Briar that stores encrypted messages when recipients are offline. Maintains communication continuity in survival groups.
 - **BitChat** - Creates Bluetooth mesh networks for encrypted messaging across up to 7 device hops without internet. Revolutionary for survival communication and emergency coordination.
+- **KeePassDX** - Secure password manager that works completely offline with encrypted database files. Critical for maintaining access to accounts and services when internet-based password managers fail.
 
 ### Linux Packages
 
@@ -126,7 +127,7 @@ sudo ./install.sh
 **Packages included:**
 
 - Docker & Docker Compose
-- Android development tools (ADB)
+- Android tools (ADB, Vysor)
 - Programming languages (Go, Python)
 - Development tools (editors, etc.)
 - Terminal emulator (Terminator)
@@ -137,6 +138,32 @@ sudo ./install.sh
 - File sync & backup (rsync, BorgBackup, Vorta GUI)
 - Software Defined Radio (GQRX)
 - Audio streaming (BUTT, Mixxx)
+- Security (UFW firewall, KeePassXC password manager)
+- Disk tools (TestDisk, GParted, NTFS-3G, ddrescue, GNOME Disks)
+- System utilities (pv progress viewer)
+
+### Bootable OS Images
+
+Download essential bootable operating systems for recovery and deployment:
+
+```bash
+cd apps/iso
+
+# Download curated collection of bootable ISOs
+./download.sh
+
+# Create bootable USB drives
+sudo ./install.sh
+```
+
+**ISOs included:**
+
+- **Ventoy Live CD** - Multi-boot USB creator that can hold multiple ISOs on one drive. Essential for creating versatile rescue drives with multiple operating systems.
+- **Xubuntu 24.04.2** - Lightweight Ubuntu with XFCE desktop. Perfect balance of functionality and resource usage for older hardware or minimal systems.
+- **Lubuntu 24.04.2** - Ultra-lightweight Ubuntu with LXQt desktop. Ideal for very old hardware or systems with limited RAM and storage.
+- **Kali Linux 2025.2** - Security and penetration testing distribution. Critical for network diagnostics, security auditing, and digital forensics in emergency scenarios.
+- **Tiny11 23H2** - Stripped-down Windows 11 build without bloatware. Useful when Windows compatibility is required but resources are limited.
+- **TinyCore Linux CorePlus** - Extremely minimal modular Linux that runs entirely in RAM. Installation image with multiple desktop environments (JWM, Fluxbox, IceWM, etc.) and wireless support for creating custom minimal systems.
 
 ### Web Content Archives
 
@@ -198,6 +225,7 @@ openwebui/data/       # Chat history and settings
 zim/data/             # Offline web archives
 apps/android/apk/data/    # Downloaded APK files
 apps/linux/deb/data/     # Downloaded .deb packages
+apps/iso/data/           # Downloaded ISO images
 docker-images/           # Saved Docker containers
 ```
 

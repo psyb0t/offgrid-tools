@@ -31,7 +31,7 @@ log "Started at: $(date)"
 log ""
 log "This will download and save the following package groups:"
 log "  🐳 Docker - container runtime and development tools"
-log "  📱 ADB - android debug bridge and development tools"
+log "  📱 Android tools - adb, vysor"
 log "  🐹 Go - programming language and tools"
 log "  🐍 Python - programming language and tools"
 log "  📝 Development tools - nano, geany"
@@ -46,6 +46,8 @@ log "  🔍 Network analysis - wireshark, nmap"
 log "  📁 File sync & backup - rsync, borgbackup, vorta"
 log "  📻 Software Defined Radio - gqrx-sdr"
 log "  🎵 Audio streaming - butt, mixxx"
+log "  🔒 Security - ufw"
+log "  💾 Disk tools - testdisk, gparted, ntfs-3g, gddrescue, gnome-disks"
 log ""
 
 # Check Docker availability first
@@ -146,6 +148,15 @@ PACKAGES=(
     "gqrx-sdr"
     "butt"
     "mixxx"
+    "ufw"
+    "testdisk"
+    "gparted"
+    "ntfs-3g"
+    "gddrescue"
+    "gnome-disk-utility"
+    "vysor"
+    "pv"
+    "keepassxc"
 )
 
 log "🐳 Starting clean Docker container in background..."
@@ -240,6 +251,9 @@ docker exec "$container_name" add-apt-repository -y ppa:longsleep/golang-backpor
 log "📦 Setting up VirtualBox repository..."
 docker exec "$container_name" wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc 2>/dev/null | docker exec -i "$container_name" gpg --dearmor --yes --output /usr/share/keyrings/oracle-virtualbox-2016.gpg >/dev/null 2>&1
 docker exec "$container_name" bash -c "echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] https://download.virtualbox.org/virtualbox/debian $OS_CODENAME contrib' > /etc/apt/sources.list.d/virtualbox.list" >/dev/null 2>&1
+
+log "📱 Setting up Vysor repository..."
+docker exec "$container_name" bash -c "echo 'deb [arch=amd64 trusted=yes] https://nuts.vysor.io/apt ./' > /etc/apt/sources.list.d/vysor.list" >/dev/null 2>&1
 
 log "🔄 Final apt-get update..."
 docker exec "$container_name" apt-get update >/dev/null 2>&1
