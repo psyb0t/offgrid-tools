@@ -158,11 +158,11 @@ sudo ./install.sh
 - VirtualBox for VMs
 - Media tools (FFmpeg, GIMP)
 - System monitoring (htop, iotop, nethogs)
-- Network analysis (Wireshark, nmap)
+- Network tools (Wireshark, nmap, netcat)
 - File sync & backup (rsync, BorgBackup, Vorta GUI)
 - Software Defined Radio (GQRX)
 - Audio streaming (BUTT, Mixxx)
-- Security (UFW firewall, KeePassXC password manager)
+- Security (UFW firewall, KeePassXC password manager, SSH client/server)
 - Disk tools (TestDisk, GParted, NTFS-3G, ddrescue, GNOME Disks)
 - System utilities (pv progress viewer)
 
@@ -192,7 +192,11 @@ sudo ./install.sh
 
 ### Web Content Archives
 
-Create offline copies of websites using ZIM format:
+#### Download Pre-made Archives
+
+Visit https://library.kiwix.org/ to browse and download ready-made ZIM archives including Wikipedia dumps, educational content, reference materials, and curated collections. Simply download the ZIM files and place them in `zim/data/`.
+
+#### Create Custom Archives
 
 ```bash
 # Archive any website for offline use

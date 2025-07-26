@@ -42,12 +42,13 @@ log "  🎨 GIMP - image editor"
 log "  🎬 FFmpeg - multimedia framework"
 log "  ⚙️  Supervisor - process control system"
 log "  📊 System monitoring - htop, iotop, nethogs"
-log "  🔍 Network analysis - wireshark, nmap"
+log "  🔍 Network tools - wireshark, nmap, netcat"
 log "  📁 File sync & backup - rsync, borgbackup, vorta"
 log "  📻 Software Defined Radio - gqrx-sdr"
 log "  🎵 Audio streaming - butt, mixxx"
-log "  🔒 Security - ufw"
+log "  🔒 Security - ufw, keepassxc, ssh client/server"
 log "  💾 Disk tools - testdisk, gparted, ntfs-3g, gddrescue, gnome-disks"
+log "  🛠️  System utilities - pv progress viewer"
 log ""
 
 # Check Docker availability first
@@ -157,6 +158,9 @@ PACKAGES=(
     "vysor"
     "pv"
     "keepassxc"
+    "openssh-client"
+    "openssh-server"
+    "netcat-openbsd"
 )
 
 log "🐳 Starting clean Docker container in background..."
