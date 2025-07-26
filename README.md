@@ -83,7 +83,7 @@ This downloads:
 - Offline content server (Kiwix)
 - IRC server & client
 - Audio streaming server (Icecast)
-- File server (Nginx)
+- Web server (Nginx)
 - Development environments (Python, Go, Ubuntu)
 
 ### Android Apps

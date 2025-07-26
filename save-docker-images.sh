@@ -25,7 +25,7 @@ print_images_info() {
     echo "  💬 TheLounge: $([ "$show_names" == "true" ] && echo "thelounge/thelounge:latest" || echo "for web-based IRC client")"
     echo "  🌐 InspIRCd: $([ "$show_names" == "true" ] && echo "inspircd/inspircd-docker:latest" || echo "for IRC server hosting")"
     echo "  📻 Icecast: $([ "$show_names" == "true" ] && echo "libretime/icecast:latest" || echo "for audio streaming")"
-    echo "  📁 Nginx: $([ "$show_names" == "true" ] && echo "nginx:alpine" || echo "for file server")"
+    echo "  📁 Nginx: $([ "$show_names" == "true" ] && echo "nginx:alpine" || echo "web server")"
     echo "  🐍 Python: $([ "$show_names" == "true" ] && echo "python:3.12" || echo "runtime")"
     echo "  🐹 Go: $([ "$show_names" == "true" ] && echo "golang:1.24" || echo "development environment")"
     echo "  🖥️  Base: $([ "$show_names" == "true" ] && echo "ubuntu:22.04" || echo "Ubuntu OS for containers")"
@@ -55,8 +55,8 @@ IMAGES=(
     # Audio streaming
     "libretime/icecast:latest"      # Audio streaming server
     
-    # File server
-    "nginx:alpine"                  # Web server for file downloads
+    # Web server
+    "nginx:alpine"                  # Web server (used for file server)
     
     # Programming language runtimes (full versions)
     "python:3.12"                   # Latest stable Python (full)
