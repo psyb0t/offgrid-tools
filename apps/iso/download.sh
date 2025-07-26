@@ -25,6 +25,7 @@ ISOS=(
     "Kali Linux 2025.2|https://ftp.riken.jp/Linux/kali-images/current/kali-linux-2025.2-installer-amd64.iso|Security and penetration testing distro"
     "Tiny11 23H2|https://archive.org/download/tiny-11-NTDEV/tiny11%2023H2%20x64.iso|Stripped-down Windows 11 build"
     "TinyCore Linux CorePlus|http://tinycorelinux.net/16.x/x86/release/CorePlus-current.iso|Extremely minimal modular Linux that runs in RAM - installation image with multiple desktops"
+    "GParted Live|https://downloads.sourceforge.net/gparted/gparted-live-1.7.0-8-amd64.iso|Disk partitioning and recovery tool"
 )
 
 print_header() {
@@ -71,17 +72,6 @@ get_filename() {
     echo "$filename"
 }
 
-# Function to format file size
-format_size() {
-    local size=$1
-    if [[ $size -gt 1073741824 ]]; then  # > 1GB
-        echo "$(( size / 1073741824 ))GB"
-    elif [[ $size -gt 1048576 ]]; then   # > 1MB
-        echo "$(( size / 1048576 ))MB"
-    else
-        echo "$(( size / 1024 ))KB"
-    fi
-}
 
 # Function to download a single ISO
 download_iso() {
@@ -102,9 +92,8 @@ download_iso() {
     
     # Check if file already exists
     if [[ -f "$filepath" ]]; then
-        local existing_size=$(stat -c%s "$filepath" 2>/dev/null || echo 0)
-        local existing_size_fmt=$(format_size $existing_size)
-        print_warning "File already exists ($existing_size_fmt), skipping"
+        local existing_size=$(du -h "$filepath" | cut -f1)
+        print_warning "File already exists ($existing_size), skipping"
         return 2  # Return 2 to indicate "skipped"
     fi
     
@@ -137,45 +126,6 @@ download_iso() {
     fi
 }
 
-# Function to show disk space requirements
-check_disk_space() {
-    local required_space=0
-    local available_space
-    
-    # Estimate space needed (rough estimates in bytes)
-    declare -A iso_sizes=(
-        ["Ventoy Live CD"]=400000000      # ~400MB
-        ["Xubuntu 24.04.2"]=3500000000   # ~3.5GB
-        ["Lubuntu 24.04.2"]=3200000000   # ~3.2GB  
-        ["Kali Linux 2025.2"]=4000000000 # ~4GB
-        ["Tiny11 23H2"]=5000000000       # ~5GB
-        ["TinyCore Linux CorePlus"]=110000000      # ~106MB
-    )
-    
-    print_info "Estimated storage requirements:"
-    for iso_entry in "${ISOS[@]}"; do
-        IFS='|' read -r iso_name url description <<< "$iso_entry"
-        local size=${iso_sizes[$iso_name]}
-        if [[ -n "$size" ]]; then
-            echo -e "  • ${YELLOW}$iso_name${NC}: $(format_size $size)"
-            required_space=$((required_space + size))
-        fi
-    done
-    
-    echo -e "  ${BOLD}Total estimated: $(format_size $required_space)${NC}"
-    
-    # Check available space in data directory
-    available_space=$(df "$DATA_DIR" | awk 'NR==2 {print $4*1024}')
-    echo -e "  ${BOLD}Available space: $(format_size $available_space)${NC}"
-    
-    if [[ $available_space -lt $required_space ]]; then
-        print_warning "You may not have enough disk space for all downloads"
-        echo -e "  ${YELLOW}Consider freeing up space or downloading selectively${NC}"
-    else
-        print_success "Sufficient disk space available"
-    fi
-    echo ""
-}
 
 # Main function
 main() {
@@ -223,7 +173,6 @@ main() {
     fi
     
     echo ""
-    check_disk_space
     
     echo -e "${WHITE}${BOLD}📋 ISO Download List:${NC}"
     echo -e "${CYAN}╭─────────────────────────────────────────────────────────────────╮${NC}"

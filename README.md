@@ -64,6 +64,13 @@ But seriously, read the rest or you'll be fucked when you actually need this off
 
 The repo itself is tiny (~1MB), but the real power comes from downloading all the shit you'll need offline.
 
+### Quick Download Everything
+
+```bash
+# Download everything at once (Docker images, APKs, packages, ISOs)
+./trigger-downloads.sh
+```
+
 ### Download Docker Images
 
 Save all the container images locally so you don't need to pull from registries:
@@ -146,9 +153,9 @@ sudo ./install.sh
 - Disk tools (TestDisk, GParted, NTFS-3G, ddrescue, GNOME Disks)
 - System utilities (pv progress viewer)
 
-### Bootable OS Images
+### Bootable Images
 
-Download essential bootable operating systems for recovery and deployment:
+Download essential bootable operating systems and tools for recovery and deployment:
 
 ```bash
 cd apps/iso
@@ -168,6 +175,7 @@ sudo ./install.sh
 - **Kali Linux 2025.2** - Security and penetration testing distribution. Critical for network diagnostics, security auditing, and digital forensics in emergency scenarios.
 - **Tiny11 23H2** - Stripped-down Windows 11 build without bloatware. Useful when Windows compatibility is required but resources are limited.
 - **TinyCore Linux CorePlus** - Extremely minimal modular Linux that runs entirely in RAM. Installation image with multiple desktop environments (JWM, Fluxbox, IceWM, etc.) and wireless support for creating custom minimal systems.
+- **GParted Live** - Disk partitioning and recovery tool. Essential for managing disk partitions, data recovery, and system repair when systems won't boot.
 
 ### Web Content Archives
 
