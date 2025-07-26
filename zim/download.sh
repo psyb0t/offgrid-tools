@@ -29,6 +29,10 @@ ZIMS=(
     "C Documentation|https://download.kiwix.org/zim/devdocs/devdocs_en_c_2025-07.zim|C programming language documentation"
     "CSS Documentation|https://download.kiwix.org/zim/devdocs/devdocs_en_css_2025-07.zim|CSS styling and layout documentation"
     "HTML Documentation|https://download.kiwix.org/zim/devdocs/devdocs_en_html_2025-07.zim|HTML markup language documentation"
+    "Nginx Documentation|https://download.kiwix.org/zim/devdocs/devdocs_en_nginx_2025-07.zim|Nginx web server configuration and documentation"
+    "Open Music Theory|https://download.kiwix.org/zim/zimit/openmusictheory.com_2025-06.zim|Music theory education and reference materials"
+    "Based Cooking|https://download.kiwix.org/zim/zimit/based.cooking_en_all_2025-07.zim|Cooking recipes and techniques without BS"
+    "Simple Wikipedia|https://download.kiwix.org/zim/wikipedia/wikipedia_en_simple_all_mini_2024-06.zim|Simplified Wikipedia articles in basic English"
 )
 
 print_header() {
