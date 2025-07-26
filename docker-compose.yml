@@ -3,7 +3,7 @@ services:
     image: ghcr.io/kiwix/kiwix-serve:latest
     container_name: offgrid-tools-kiwix
     ports:
-      - "8080:8080"
+      - "8000:8080"
     volumes:
       - ./zim/data:/data:ro
     command: "*.zim"
@@ -37,7 +37,7 @@ services:
     image: ghcr.io/open-webui/open-webui:main
     container_name: offgrid-tools-openwebui
     ports:
-      - "3000:8080"
+      - "8001:8080"
     volumes:
       - ./openwebui/data:/app/backend/data
     restart: unless-stopped
@@ -54,7 +54,7 @@ services:
     container_name: offgrid-tools-ollama-chat-party
     tty: true
     ports:
-      - "8000:8000"
+      - "8002:8000"
     volumes:
       - ./ollama-chat-party/data:/documents
     restart: unless-stopped
@@ -91,7 +91,7 @@ services:
     image: thelounge/thelounge:latest
     container_name: offgrid-tools-thelounge
     ports:
-      - "9000:9000"
+      - "8003:9000"
     volumes:
       - ./thelounge:/var/opt/thelounge
     restart: unless-stopped
@@ -106,7 +106,7 @@ services:
     image: libretime/icecast:latest
     container_name: offgrid-tools-icecast
     ports:
-      - "8001:8000"
+      - "8004:8000"
     restart: unless-stopped
     networks:
       - offgrid
@@ -120,7 +120,7 @@ services:
     image: nginx:alpine
     container_name: offgrid-tools-file-server
     ports:
-      - "8002:8002"
+      - "8005:8002"
     volumes:
       - ./file-server/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./file-server/entrypoint.sh:/entrypoint.sh:ro

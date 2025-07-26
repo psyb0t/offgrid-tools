@@ -206,12 +206,12 @@ docker-compose down
 
 Once running, access services at:
 
-- **http://localhost:8080** - Kiwix (offline web content)
-- **http://localhost:3000** - Open WebUI (AI chat interface)
-- **http://localhost:8000** - Ollama Chat Party (multi-user AI chat room with RAG support)
-- **http://localhost:8001** - Icecast (audio streaming server)
-- **http://localhost:8002** - File Server (download APKs, DEBs, ISOs, ZIM files, Docker images, other files)
-- **http://localhost:9000** - TheLounge (IRC web client)
+- **http://localhost:8000** - Kiwix (offline web content)
+- **http://localhost:8001** - Open WebUI (AI chat interface)
+- **http://localhost:8002** - Ollama Chat Party (multi-user AI chat room with RAG support)
+- **http://localhost:8003** - TheLounge (IRC web client)
+- **http://localhost:8004** - Icecast (audio streaming server)
+- **http://localhost:8005** - File Server (download APKs, DEBs, ISOs, ZIM files, Docker images, other files)
 
 **Default credentials:**
 
