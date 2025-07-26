@@ -18,6 +18,7 @@ Docker Compose setup for when the internet dies and you still need to get shit d
 - [Ports & Access](#ports--access)
 - [Data & Storage](#data--storage)
 - [Troubleshooting](#troubleshooting)
+- [License](#license)
 
 ## What the hell is this?
 
@@ -323,5 +324,9 @@ Most of this is gitignored - the repo just has the scripts to download everythin
 ---
 
 Remember: This whole setup works **completely offline**. Once you've downloaded everything, you can run it on an isolated network, in a bunker, or wherever the fuck you want without any external dependencies.
+
+## License
+
+WTFPL - Do What The Fuck You Want To Public License. See [LICENSE](LICENSE) file.
 
 Stay independent. 🔥
