@@ -217,7 +217,7 @@ Once running, access services at:
 
 - Open WebUI: Create your own admin account on first visit
 - IRC operator: `offgrid` / `offgrid123`
-- Chat Party: password is `offgrid123`
+- Ollama Chat Party: password is `offgrid123`
 - Icecast: all passwords are `offgrid123`
 - File Server: `offgrid` / `offgrid123` (can be changed with FILE_SERVER_AUTH env var)
 

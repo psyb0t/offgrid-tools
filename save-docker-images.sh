@@ -21,7 +21,7 @@ print_images_info() {
     echo "  🌐 Zimit: $([ "$show_names" == "true" ] && echo "ghcr.io/openzim/zimit:latest" || echo "for web content archiving")"
     echo "  🤖 Ollama: $([ "$show_names" == "true" ] && echo "ollama/ollama:latest" || echo "for local AI models")"
     echo "  🌐 Open WebUI: $([ "$show_names" == "true" ] && echo "ghcr.io/open-webui/open-webui:main" || echo "for AI chat interface")"
-    echo "  🎉 Chat Party: $([ "$show_names" == "true" ] && echo "psyb0t/ollama-chat-party:latest" || echo "for RAG-enabled chat")"
+    echo "  🎉 Ollama Chat Party: $([ "$show_names" == "true" ] && echo "psyb0t/ollama-chat-party:latest" || echo "for RAG-enabled chat")"
     echo "  💬 TheLounge: $([ "$show_names" == "true" ] && echo "thelounge/thelounge:latest" || echo "for web-based IRC client")"
     echo "  🌐 InspIRCd: $([ "$show_names" == "true" ] && echo "inspircd/inspircd-docker:latest" || echo "for IRC server hosting")"
     echo "  📻 Icecast: $([ "$show_names" == "true" ] && echo "libretime/icecast:latest" || echo "for audio streaming")"
