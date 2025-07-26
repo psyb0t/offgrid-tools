@@ -206,6 +206,19 @@ cd zim
 ./download.sh
 ```
 
+**Archives included:**
+
+- **FreeCodeCamp** - Learn to code with tutorials and interactive lessons
+- **Termux Documentation** - Complete Android terminal emulator documentation  
+- **Military Medicine** - Emergency medical procedures and combat medicine
+- **Programming Documentation** - C++, Go, Docker, JavaScript, C, CSS, HTML, Nginx, Linux man pages
+- **Open Data Structures** - Computer science algorithms and data structures textbook
+- **Simple Wikipedia** - Simplified Wikipedia articles in basic English
+- **Ham Radio Stack Exchange** - Amateur radio Q&A for emergency communications
+- **Open Music Theory** - Music theory education and reference materials
+- **Based Cooking** - Practical cooking recipes and techniques
+- **Food Preparation Guide** - Essential food preparation and preservation techniques
+
 #### Create Custom Archives
 
 ```bash

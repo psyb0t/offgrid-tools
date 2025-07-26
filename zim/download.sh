@@ -33,6 +33,10 @@ ZIMS=(
     "Open Music Theory|https://download.kiwix.org/zim/zimit/openmusictheory.com_2025-06.zim|Music theory education and reference materials"
     "Based Cooking|https://download.kiwix.org/zim/zimit/based.cooking_en_all_2025-07.zim|Cooking recipes and techniques without BS"
     "Simple Wikipedia|https://download.kiwix.org/zim/wikipedia/wikipedia_en_simple_all_mini_2024-06.zim|Simplified Wikipedia articles in basic English"
+    "Linux Man Pages|https://download.kiwix.org/zim/devdocs/devdocs_en_man_2025-07.zim|Complete Linux manual pages and command documentation"
+    "Ham Radio Stack Exchange|https://download.kiwix.org/zim/stack_exchange/ham.stackexchange.com_en_all_2025-07.zim|Amateur radio Q&A and technical discussions"
+    "Open Data Structures|https://download.kiwix.org/zim/zimit/opendatastructures.org_en_all_2025-06.zim|Computer science algorithms and data structures textbook"
+    "Food Preparation Guide|https://download.kiwix.org/zim/other/zimgit-food-preparation_en_2025-04.zim|Essential food preparation and preservation techniques"
 )
 
 print_header() {
