@@ -43,6 +43,8 @@ cd offgrid-tools
 docker-compose up
 ```
 
+**Note:** This repo has only been tested on Ubuntu for now. If you encounter bugs on other operating systems, please create an issue or submit a pull request with the fix.
+
 But seriously, read the rest or you'll be fucked when you actually need this offline.
 
 ## Services Overview
