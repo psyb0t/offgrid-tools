@@ -152,8 +152,9 @@ sudo ./install.sh
 
 - Docker & Docker Compose
 - Android tools (ADB, Vysor)
-- Programming languages (Go, Python)
-- Development tools (editors, etc.)
+- Text editor (nano)
+- Development tools (Go, Python, PHP, geany IDE, build-essential, gcc, g++, make, cmake, gdb, valgrind)
+- Web server (nginx)
 - Terminal emulator (Terminator)
 - VirtualBox for VMs
 - Media tools (FFmpeg, GIMP)
