@@ -35,9 +35,12 @@ Thumbs.db
 thelounge/*
 !thelounge/config.js
 
-# InspIRCd - ignore everything except conf/motd.txt and conf/inspircd.conf
+# InspIRCd - ignore everything except conf/ and logs/ directories  
 inspircd/*
 !inspircd/conf/
+!inspircd/logs/
 inspircd/conf/*
 !inspircd/conf/motd.txt
 !inspircd/conf/inspircd.conf
+inspircd/logs/*
+!inspircd/logs/.gitkeep
