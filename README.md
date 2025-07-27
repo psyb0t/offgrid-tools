@@ -170,11 +170,15 @@ sudo ./install.sh
 - System monitoring (htop, iotop, nethogs)
 - Network tools (Wireshark, nmap, netcat)
 - File sync & backup (rsync, BorgBackup, Vorta GUI)
-- Software Defined Radio (GQRX)
+- Software Defined Radio (GQRX, GNU Radio with dev tools, gr-osmosdr, RTL-SDR tools)
+- Radio software tools (FLDigi, QSSTV, Direwolf APRS, Multimon-NG decoder)
+- Satellite tracking (Gpredict)
+- Audio processing (SoX audio toolkit)
+- Data visualization (Gnuplot)
 - Audio streaming (BUTT, Mixxx)
-- Security (UFW firewall, KeePassXC password manager, SSH client/server)
+- Security (UFW firewall, KeePassXC password manager, SSH client/server, Aircrack-ng, MDK4)
 - Disk tools (TestDisk, GParted, NTFS-3G, ddrescue, GNOME Disks)
-- System utilities (pv progress viewer)
+- System utilities (pv progress viewer, gdebi package installer)
 
 ### Bootable Images
 
@@ -223,9 +227,10 @@ cd zim
 - **Termux Documentation** - Complete Android terminal emulator documentation
 - **Military Medicine** - Emergency medical procedures and combat medicine
 - **Programming Documentation** - C++, Go, Docker, JavaScript, C, CSS, HTML, Nginx, Linux man pages
+- **Mankier Linux Man Pages** - Comprehensive Linux manual pages and command documentation
 - **Open Data Structures** - Computer science algorithms and data structures textbook
 - **Simple Wikipedia** - Simplified Wikipedia articles in basic English
-- **Ham Radio Stack Exchange** - Amateur radio Q&A for emergency communications
+- **Ham Radio Stack Exchange** - Amateur radio Q&A and technical discussions
 - **Open Music Theory** - Music theory education and reference materials
 - **Based Cooking** - Practical cooking recipes and techniques
 - **Food Preparation Guide** - Essential food preparation and preservation techniques
@@ -234,7 +239,10 @@ cd zim
 
 ```bash
 # Archive any website for offline use
-./create-zim.sh https://stackoverflow.com stackoverflow
+./zim/create.sh https://stackoverflow.com stackoverflow
+
+# Archive all recommended sites (8 sites: radio, programming, survival, SDR)
+./zim/create.sh recommended
 
 # Copy ZIM files to Android devices
 ./zim/copy-to-android.sh data/stackoverflow.zim

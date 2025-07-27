@@ -37,6 +37,7 @@ ZIMS=(
     "Ham Radio Stack Exchange|https://download.kiwix.org/zim/stack_exchange/ham.stackexchange.com_en_all_2025-07.zim|Amateur radio Q&A and technical discussions"
     "Open Data Structures|https://download.kiwix.org/zim/zimit/opendatastructures.org_en_all_2025-06.zim|Computer science algorithms and data structures textbook"
     "Food Preparation Guide|https://download.kiwix.org/zim/other/zimgit-food-preparation_en_2025-04.zim|Essential food preparation and preservation techniques"
+    "Mankier Linux Man Pages|https://download.kiwix.org/zim/zimit/www.mankier.com_en_all_2025-05.zim|Comprehensive Linux manual pages and command documentation"
 )
 
 print_header() {
