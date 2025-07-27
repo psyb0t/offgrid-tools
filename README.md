@@ -51,27 +51,35 @@ But seriously, read the rest or you'll be fucked when you actually need this off
 ## Services Overview
 
 ### Kiwix (Port 8000)
+
 Offline content server that serves ZIM archive files through a web interface. Reads ZIM files you place in `zim/data/` including Wikipedia dumps, educational materials, and archived websites. Essential for accessing knowledge when internet is unavailable. Simply visit the web interface to browse and search offline content - no additional setup required.
 
 ### Ollama (Internal Port 11434)
+
 Local AI model server that runs language models completely offline on your hardware. Stores models and configuration in `ollama/data/` directory. Provides ChatGPT-like capabilities without sending data to external services. Not directly accessible from host - access through Open WebUI or Ollama Chat Party. Models are automatically downloaded on first use - larger models require more RAM and benefit from GPU acceleration.
 
 ### Open WebUI (Port 8001)
+
 Web-based chat interface for Ollama that provides a modern ChatGPT-like experience. Stores user accounts, chat history, and preferences in `openwebui/data/`. Create your admin account on first visit, then start chatting with local AI models. Supports file uploads, conversation management, and multiple model selection.
 
 ### Ollama Chat Party (Port 8002)
+
 Multi-user AI chat room where multiple people can chat with the same AI simultaneously, sharing conversation history. Supports RAG (Retrieval-Augmented Generation) with documents stored in `ollama-chat-party/data/`. Upload documents to enhance AI responses with your own knowledge base. Default password is `offgrid123`.
 
 ### InspIRCd (Internal Port 6667)
+
 IRC server for local network chat and communication. Configuration stored in `inspircd/conf/` with logs in `inspircd/logs/`. Provides traditional IRC channels and private messaging within the Docker network. Not directly accessible from host - access through TheLounge web client. Operator credentials: `offgrid` / `offgrid123`.
 
 ### TheLounge (Port 8003)
+
 Modern web-based IRC client that connects to the InspIRCd server. Configuration and user data stored in `thelounge/` directory. Provides a Discord-like interface for IRC with persistent connections, file sharing, and modern features. No additional setup needed - automatically connects to the local IRC server.
 
 ### Icecast (Port 8004)
+
 Audio streaming server for broadcasting live audio streams to multiple listeners. Creates internet radio stations or live audio feeds. To stream audio, use source clients like BUTT (Broadcast Using This Tool) or Mixxx with server `localhost:8004` and password `offgrid123`. Listeners access streams at `http://localhost:8004/mountpoint`. Perfect for emergency broadcasts, local radio, or streaming music to your network.
 
 ### File Server (Port 8005)
+
 Web-based file browser for downloading all offline content via HTTP. Serves files from `apps/*/data/`, `docker-images/`, `zim/data/`, and custom files from `file-server/other-files/`. Simply browse the web interface to download APKs, DEBs, ISOs, Docker images, or any custom files. Supports basic authentication - default credentials: `offgrid` / `offgrid123`.
 
 ## Preparing for the Apocalypse
@@ -190,6 +198,8 @@ sudo ./install.sh
 - **Kali Linux 2025.2** - Security and penetration testing distribution. Critical for network diagnostics, security auditing, and digital forensics in emergency scenarios.
 - **Tiny11 23H2** - Stripped-down Windows 11 build without bloatware. Useful when Windows compatibility is required but resources are limited.
 - **TinyCore Linux CorePlus** - Extremely minimal modular Linux that runs entirely in RAM. Installation image with multiple desktop environments (JWM, Fluxbox, IceWM, etc.) and wireless support for creating custom minimal systems.
+- **DragonOS Noble R5** - Software Defined Radio operating system based on Ubuntu. Complete SDR toolkit with GNU Radio, GQRX, and radio communication tools pre-configured for emergency communications and spectrum analysis.
+- **SkyWave Linux 5.7.0** - Ham radio and electronics operating system with GNU Radio and SDR tools. Specialized distribution for amateur radio operators with digital modes, logging software, and RF analysis tools.
 - **GParted Live** - Disk partitioning and recovery tool. Essential for managing disk partitions, data recovery, and system repair when systems won't boot.
 
 ### Web Content Archives
@@ -210,7 +220,7 @@ cd zim
 **Archives included:**
 
 - **FreeCodeCamp** - Learn to code with tutorials and interactive lessons
-- **Termux Documentation** - Complete Android terminal emulator documentation  
+- **Termux Documentation** - Complete Android terminal emulator documentation
 - **Military Medicine** - Emergency medical procedures and combat medicine
 - **Programming Documentation** - C++, Go, Docker, JavaScript, C, CSS, HTML, Nginx, Linux man pages
 - **Open Data Structures** - Computer science algorithms and data structures textbook

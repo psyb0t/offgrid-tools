@@ -26,6 +26,8 @@ ISOS=(
     "Tiny11 23H2|https://archive.org/download/tiny-11-NTDEV/tiny11%2023H2%20x64.iso|Stripped-down Windows 11 build"
     "TinyCore Linux CorePlus|http://tinycorelinux.net/16.x/x86/release/CorePlus-current.iso|Extremely minimal modular Linux that runs in RAM - installation image with multiple desktops"
     "GParted Live|https://downloads.sourceforge.net/gparted/gparted-live-1.7.0-8-amd64.iso|Disk partitioning and recovery tool"
+    "DragonOS Noble R5|https://sourceforge.net/projects/dragonos-focal/files/DragonOS_Noble_R5.iso|Software Defined Radio operating system based on Ubuntu"
+    "SkyWave Linux 5.7.0|https://sourceforge.net/projects/skywavelinux/files/skywavelinux-5.7.0.iso|Ham radio and electronics operating system with GNU Radio and SDR tools"
 )
 
 print_header() {
