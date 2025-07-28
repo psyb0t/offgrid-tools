@@ -38,6 +38,14 @@ ZIMS=(
     "Open Data Structures|https://download.kiwix.org/zim/zimit/opendatastructures.org_en_all_2025-06.zim|Computer science algorithms and data structures textbook"
     "Food Preparation Guide|https://download.kiwix.org/zim/other/zimgit-food-preparation_en_2025-04.zim|Essential food preparation and preservation techniques"
     "Mankier Linux Man Pages|https://download.kiwix.org/zim/zimit/www.mankier.com_en_all_2025-05.zim|Comprehensive Linux manual pages and command documentation"
+    "SigID Wiki|https://archive.org/download/sigidwiki-com-2025-07-20250728012219/sigidwiki.com_2025-07.zim|Signal identification wiki for radio frequency analysis"
+    "Learn X in Y Minutes|https://archive.org/download/learnxinyminutes-com-2025-07-20250728014328/learnxinyminutes.com_2025-07.zim|Quick programming language tutorials and cheat sheets"
+    "Ready State|https://archive.org/download/readystate-cc-2025-07-20250728015120/readystate.cc_2025-07.zim|Emergency preparedness and disaster response information"
+    "GNU Radio Wiki|https://archive.org/download/wiki-gnuradio-org-2025-07-20250728015400/wiki.gnuradio.org_2025-07.zim|GNU Radio documentation and tutorials"
+    "Go.dev Documentation|https://archive.org/download/go-dev-doc-2025-07-20250728020653/go.dev-doc_2025-07.zim|Official Go programming language documentation"
+    "Linux Command|https://archive.org/download/linuxcommand-org-2025-07-20250728022011/linuxcommand.org_2025-07.zim|Comprehensive Linux command line tutorials and reference"
+    "TruePrepper|https://archive.org/download/trueprepper-com-2025-07-20250728020519/trueprepper.com_2025-07.zim|Survival and preparedness guides and resources"
+    "Linux Journey|https://archive.org/download/linuxjourney-com-2025-07-20250728023036/linuxjourney_com_2025-07.zim|Interactive Linux learning platform and tutorials"
 )
 
 print_header() {

@@ -235,15 +235,31 @@ cd zim
 - **Open Music Theory** - Music theory education and reference materials
 - **Based Cooking** - Practical cooking recipes and techniques
 - **Food Preparation Guide** - Essential food preparation and preservation techniques
+- **SigID Wiki** - Signal identification wiki for radio frequency analysis
+- **Learn X in Y Minutes** - Quick programming language tutorials and cheat sheets
+- **Ready State** - Emergency preparedness and disaster response information
+- **GNU Radio Wiki** - GNU Radio documentation and tutorials
+- **Go.dev Documentation** - Official Go programming language documentation
+- **Linux Command** - Comprehensive Linux command line tutorials and reference
+- **TruePrepper** - Survival and preparedness guides and resources
+- **Linux Journey** - Interactive Linux learning platform and tutorials
 
 #### Create Custom Archives
 
 ```bash
-# Archive any website for offline use
+# Archive any website for offline use (auto-generates name)
+./zim/create.sh https://stackoverflow.com
+# Creates: stackoverflow_com.zim
+
+# Archive with custom name
 ./zim/create.sh https://stackoverflow.com stackoverflow
 
+# Archive website with path (auto-generates descriptive name)
+./zim/create.sh https://example.com/docs/guide
+# Creates: example_com_docs_guide.zim
+
 # Copy ZIM files to Android devices
-./zim/copy-to-android.sh data/stackoverflow.zim
+./zim/copy-to-android.sh data/stackoverflow_com.zim
 ```
 
 ZIM files work with Kiwix and contain entire websites with search capability.

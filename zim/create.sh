@@ -37,13 +37,14 @@ print_header() {
 
 print_usage() {
     echo -e "${WHITE}${BOLD}USAGE:${NC}"
-    echo -e "  $0 ${YELLOW}<URL>${NC} ${BLUE}<ZIM_NAME>${NC} [${GREEN}<OUTPUT_DIR>${NC}] [${PURPLE}<WORKERS>${NC}]"
+    echo -e "  $0 ${YELLOW}<URL>${NC} [${BLUE}<ZIM_NAME>${NC}] [${GREEN}<OUTPUT_DIR>${NC}] [${PURPLE}<WORKERS>${NC}]"
     echo ""
     echo -e "${WHITE}${BOLD}ARGUMENTS:${NC}"
     echo -e "  ${YELLOW}URL${NC}         ${WHITE}Website URL to archive (required)${NC}"
     echo -e "              ${WHITE}Example: https://example.com${NC}"
     echo ""
-    echo -e "  ${BLUE}ZIM_NAME${NC}    ${WHITE}Name for the ZIM file (required)${NC}"
+    echo -e "  ${BLUE}ZIM_NAME${NC}    ${WHITE}Name for the ZIM file (optional)${NC}"
+    echo -e "              ${WHITE}If not provided, auto-generated from URL${NC}"
     echo -e "              ${WHITE}Example: example.com${NC}"
     echo ""
     echo -e "  ${GREEN}OUTPUT_DIR${NC}  ${WHITE}Local directory to save ZIM file (optional)${NC}"
@@ -54,7 +55,11 @@ print_usage() {
     echo -e "              ${WHITE}Range: 1-100${NC}"
     echo ""
     echo -e "${WHITE}${BOLD}EXAMPLES:${NC}"
-    echo -e "  ${WHITE}Basic usage:${NC}"
+    echo -e "  ${WHITE}Auto-generated name:${NC}"
+    echo -e "    $0 https://example.com/docs/guide"
+    echo -e "    ${WHITE}# Creates: example_com_docs_guide.zim${NC}"
+    echo ""
+    echo -e "  ${WHITE}Custom name:${NC}"
     echo -e "    $0 https://example.com example.com"
     echo ""
     echo -e "  ${WHITE}Custom output directory:${NC}"
@@ -110,13 +115,39 @@ validate_workers() {
     return 0
 }
 
+# Generate ZIM name from URL
+generate_zim_name() {
+    local url="$1"
+    local name
+    
+    # Remove protocol
+    name=$(echo "$url" | sed 's|^https\?://||')
+    
+    # Remove trailing slash
+    name=$(echo "$name" | sed 's|/$||')
+    
+    # Replace slashes, dots, and other special characters with underscores
+    name=$(echo "$name" | sed 's|[/.:-]|_|g')
+    
+    # Remove consecutive underscores
+    name=$(echo "$name" | sed 's|_\+|_|g')
+    
+    # Remove leading/trailing underscores
+    name=$(echo "$name" | sed 's|^_||; s|_$||')
+    
+    # Convert to lowercase
+    name=$(echo "$name" | tr '[:upper:]' '[:lower:]')
+    
+    echo "$name"
+}
+
 # Function to create a single ZIM file
 create_single_zim() {
     local url="$1"
     local zim_name="$2"
     local output_dir="$3"
     local workers="$4"
-    
+
     echo ""
     echo -e "${WHITE}${BOLD}🚀 Creating ZIM for: $url${NC}"
     echo -e "${CYAN}╭─────────────────────────────────────────────────────────╮${NC}"
@@ -125,7 +156,7 @@ create_single_zim() {
     echo -e "${CYAN}│${NC} ${WHITE}Workers:${NC}  ${PURPLE}$workers${NC}"
     echo -e "${CYAN}╰─────────────────────────────────────────────────────────╯${NC}"
     echo ""
-    
+
     # Run the Zimit container
     if docker run --rm \
         --network host \
@@ -135,13 +166,18 @@ create_single_zim() {
         --seeds "$url" \
         --name "$zim_name" \
         --workers "$workers"; then
-        
+
         # Check if ZIM file starting with our name was created
         local latest_zim=$(find "$output_dir" -name "${zim_name}*.zim" -type f -printf '%T@ %p\n' 2>/dev/null | sort -nr | head -1 | cut -d' ' -f2-)
-        
+
         if [[ -n "$latest_zim" && -f "$latest_zim" ]]; then
             local file_size=$(du -h "$latest_zim" | cut -f1)
             local file_name=$(basename "$latest_zim")
+            
+            # Fix file ownership
+            print_info "Setting file ownership to user 1000..."
+            sudo chown 1000:1000 "$latest_zim"
+            
             echo -e "${GREEN}${BOLD}✅ SUCCESS: $zim_name${NC}"
             echo -e "${WHITE}File:${NC} ${GREEN}$file_name${NC} ${WHITE}(${BLUE}$file_size${NC}${WHITE})${NC}"
             return 0
@@ -158,7 +194,7 @@ create_single_zim() {
 # Main function
 main() {
     print_header
-    
+
     # Parse arguments
     case "${1:-}" in
         -h|--help|"")
@@ -166,63 +202,72 @@ main() {
             exit 0
             ;;
     esac
-    
+
     # Check minimum required arguments
-    if [[ $# -lt 2 ]]; then
-        print_error "Missing required arguments"
+    if [[ $# -lt 1 ]]; then
+        print_error "Missing required URL argument"
         echo ""
         print_usage
         exit 1
     fi
-    
+
     # Parse parameters
     URL="$1"
-    ZIM_NAME="$2"
-    OUTPUT_DIR="${3:-$DEFAULT_OUTPUT_DIR}"
-    WORKERS="${4:-$DEFAULT_WORKERS}"
     
+    # Auto-generate ZIM name if not provided
+    if [[ -n "${2:-}" ]]; then
+        ZIM_NAME="$2"
+        OUTPUT_DIR="${3:-$DEFAULT_OUTPUT_DIR}"
+        WORKERS="${4:-$DEFAULT_WORKERS}"
+    else
+        ZIM_NAME=$(generate_zim_name "$URL")
+        OUTPUT_DIR="${2:-$DEFAULT_OUTPUT_DIR}"
+        WORKERS="${3:-$DEFAULT_WORKERS}"
+        print_info "Auto-generated ZIM name: $ZIM_NAME"
+    fi
+
     # Validate inputs
     echo -e "${WHITE}${BOLD}🔍 Validating parameters...${NC}"
-    
+
     if ! validate_url "$URL"; then
         exit 1
     fi
     print_success "URL format is valid"
-    
+
     if [[ -z "$ZIM_NAME" ]]; then
         print_error "ZIM name cannot be empty"
         exit 1
     fi
     print_success "ZIM name is valid"
-    
+
     if ! validate_workers "$WORKERS"; then
         exit 1
     fi
     print_success "Worker count is valid"
-    
+
     # Create output directory if it doesn't exist
     if [[ ! -d "$OUTPUT_DIR" ]]; then
         print_info "Creating output directory: $OUTPUT_DIR"
         mkdir -p "$OUTPUT_DIR"
     fi
-    
+
     # Get absolute path for Docker volume mount
     OUTPUT_DIR=$(realpath "$OUTPUT_DIR")
     print_success "Output directory ready: $OUTPUT_DIR"
-    
+
     # Check Docker and Zimit image
     print_info "Checking Docker availability..."
     if ! command -v docker >/dev/null 2>&1; then
         print_error "Docker is not installed or not in PATH"
         exit 1
     fi
-    
+
     if ! docker info >/dev/null 2>&1; then
         print_error "Docker daemon is not running or not accessible"
         exit 1
     fi
     print_success "Docker is ready"
-    
+
     print_info "Checking Zimit Docker image..."
     if ! docker image inspect ghcr.io/openzim/zimit >/dev/null 2>&1; then
         print_warning "Zimit image not found locally, pulling..."
@@ -231,7 +276,7 @@ main() {
     else
         print_success "Zimit image is available"
     fi
-    
+
     # Create single ZIM file
     if create_single_zim "$URL" "$ZIM_NAME" "$OUTPUT_DIR" "$WORKERS"; then
         echo ""
