@@ -163,7 +163,7 @@ sudo ./install.sh
 - Docker & Docker Compose
 - Android tools (ADB, Vysor)
 - Text editor (nano)
-- Development tools (Go, Python, PHP, geany IDE, build-essential, gcc, g++, make, cmake, gdb, valgrind)
+- Development tools (Go, Python, PHP, geany IDE, build-essential, gcc, g++, make, cmake, gdb, valgrind, Git, Git LFS)
 - Web server (nginx)
 - Terminal emulator (Terminator)
 - VirtualBox for VMs
@@ -179,6 +179,7 @@ sudo ./install.sh
 - Audio streaming (BUTT, Mixxx)
 - Security (UFW firewall, KeePassXC password manager, SSH client/server, Aircrack-ng, MDK4)
 - Disk tools (TestDisk, GParted, NTFS-3G, ddrescue, GNOME Disks)
+- Archive utilities (zip, unzip, rar, unrar, 7-Zip, tar, gzip, bzip2, xz-utils, zstd, arj, lzip, cabextract)
 - System utilities (pv progress viewer, gdebi package installer)
 
 ### Bootable Images

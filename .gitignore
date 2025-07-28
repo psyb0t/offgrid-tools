@@ -6,6 +6,10 @@
 docker-images/*
 !docker-images/.gitkeep
 
+# File server other-files - ignore all except .gitkeep
+file-server/other-files/*
+!file-server/other-files/.gitkeep
+
 # Logs
 *.log
 
