@@ -28,6 +28,7 @@ APKS=(
     "Briar Mailbox|https://briarproject.org/apk/mailbox.apk|briar_mailbox.apk"
     "BitChat P2P|https://github.com/permissionlesstech/bitchat-android/releases/download/0.7.2/bitchat-0.7.2.apk"
     "KeePassDX|https://github.com/Kunzisoft/KeePassDX/releases/download/4.1.3/KeePassDX-4.1.3-libre.apk"
+    "SDR++ Software Defined Radio|https://github.com/AlexandreRouma/SDRPlusPlus/releases/download/nightly/sdrpp.apk"
 )
 
 print_header() {

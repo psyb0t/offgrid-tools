@@ -140,6 +140,7 @@ cd apps/android/apk
 - **Briar Mailbox** - Message relay service for Briar that stores encrypted messages when recipients are offline. Maintains communication continuity in survival groups.
 - **BitChat** - Creates Bluetooth mesh networks for encrypted messaging across up to 7 device hops without internet. Revolutionary for survival communication and emergency coordination.
 - **KeePassDX** - Secure password manager that works completely offline with encrypted database files. Critical for maintaining access to accounts and services when internet-based password managers fail.
+- **SDR++ Software Defined Radio** - Advanced software defined radio application for Android. Essential for monitoring radio frequencies, emergency communications, and spectrum analysis when traditional communication infrastructure fails.
 
 ### Linux Packages
 
@@ -240,9 +241,6 @@ cd zim
 ```bash
 # Archive any website for offline use
 ./zim/create.sh https://stackoverflow.com stackoverflow
-
-# Archive all recommended sites (8 sites: radio, programming, survival, SDR)
-./zim/create.sh recommended
 
 # Copy ZIM files to Android devices
 ./zim/copy-to-android.sh data/stackoverflow.zim
