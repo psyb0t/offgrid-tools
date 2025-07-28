@@ -57,7 +57,7 @@ print_usage() {
     echo -e "${WHITE}${BOLD}EXAMPLES:${NC}"
     echo -e "  ${WHITE}Auto-generated name:${NC}"
     echo -e "    $0 https://example.com/docs/guide"
-    echo -e "    ${WHITE}# Creates: example_com_docs_guide.zim${NC}"
+    echo -e "    ${WHITE}# Creates: example.com_docs_guide.zim${NC}"
     echo ""
     echo -e "  ${WHITE}Custom name:${NC}"
     echo -e "    $0 https://example.com example.com"
@@ -126,8 +126,8 @@ generate_zim_name() {
     # Remove trailing slash
     name=$(echo "$name" | sed 's|/$||')
     
-    # Replace slashes, dots, and other special characters with underscores
-    name=$(echo "$name" | sed 's|[/.:-]|_|g')
+    # Replace slashes and other special characters with underscores (but keep dots)
+    name=$(echo "$name" | sed 's|[/:-]|_|g')
     
     # Remove consecutive underscores
     name=$(echo "$name" | sed 's|_\+|_|g')
@@ -147,6 +147,33 @@ create_single_zim() {
     local zim_name="$2"
     local output_dir="$3"
     local workers="$4"
+
+    # Check if files starting with zim_name already exist
+    local existing_files=($(ls "${output_dir}/${zim_name}"*.zim 2>/dev/null))
+    if [[ ${#existing_files[@]} -gt 0 ]]; then
+        echo ""
+        echo -e "${YELLOW}⚠️  Found existing ZIM file(s) starting with '${zim_name}':${NC}"
+        for file in "${existing_files[@]}"; do
+            local file_info=$(ls -lh "$file" | awk '{print $5 " " $9}')
+            echo -e "  • ${GREEN}$(basename "$file")${NC} - $(du -h "$file" | cut -f1)"
+        done
+        echo ""
+        
+        read -p "Do you want to replace existing ZIM file(s)? (y/N): " -n 1 -r
+        echo ""
+        
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            echo -e "${YELLOW}🗑️  Removing existing ZIM file(s)...${NC}"
+            for file in "${existing_files[@]}"; do
+                rm -f "$file"
+                echo -e "  • Removed $(basename "$file")"
+            done
+            echo ""
+        else
+            echo -e "${BLUE}ℹ️  Keeping existing files - operation cancelled${NC}"
+            return 2  # Return 2 to indicate user cancelled
+        fi
+    fi
 
     echo ""
     echo -e "${WHITE}${BOLD}🚀 Creating ZIM for: $url${NC}"
@@ -278,9 +305,16 @@ main() {
     fi
 
     # Create single ZIM file
-    if create_single_zim "$URL" "$ZIM_NAME" "$OUTPUT_DIR" "$WORKERS"; then
+    create_single_zim "$URL" "$ZIM_NAME" "$OUTPUT_DIR" "$WORKERS"
+    local result=$?
+    
+    if [[ $result -eq 0 ]]; then
         echo ""
         print_info "You can now use this ZIM file with Kiwix server or other ZIM readers"
+    elif [[ $result -eq 2 ]]; then
+        echo ""
+        print_info "Operation cancelled by user"
+        exit 0
     else
         exit 1
     fi

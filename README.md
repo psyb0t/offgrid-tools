@@ -243,23 +243,24 @@ cd zim
 - **Linux Command** - Comprehensive Linux command line tutorials and reference
 - **TruePrepper** - Survival and preparedness guides and resources
 - **Linux Journey** - Interactive Linux learning platform and tutorials
+- **RTL-SDR** - RTL-SDR news, tutorials and projects
 
 #### Create Custom Archives
 
 ```bash
 # Archive any website for offline use (auto-generates name)
 ./zim/create.sh https://stackoverflow.com
-# Creates: stackoverflow_com.zim
+# Creates: stackoverflow.com.zim
 
 # Archive with custom name
 ./zim/create.sh https://stackoverflow.com stackoverflow
 
 # Archive website with path (auto-generates descriptive name)
 ./zim/create.sh https://example.com/docs/guide
-# Creates: example_com_docs_guide.zim
+# Creates: example.com_docs_guide.zim
 
 # Copy ZIM files to Android devices
-./zim/copy-to-android.sh data/stackoverflow_com.zim
+./zim/copy-to-android.sh data/stackoverflow.com.zim
 ```
 
 ZIM files work with Kiwix and contain entire websites with search capability.

@@ -46,6 +46,7 @@ ZIMS=(
     "Linux Command|https://archive.org/download/linuxcommand-org-2025-07-20250728022011/linuxcommand.org_2025-07.zim|Comprehensive Linux command line tutorials and reference"
     "TruePrepper|https://archive.org/download/trueprepper-com-2025-07-20250728020519/trueprepper.com_2025-07.zim|Survival and preparedness guides and resources"
     "Linux Journey|https://archive.org/download/linuxjourney-com-2025-07-20250728023036/linuxjourney_com_2025-07.zim|Interactive Linux learning platform and tutorials"
+    "RTL-SDR|https://archive.org/download/rtl-sdr-com-2025-07-20250728022834/rtl-sdr.com_2025-07.zim|RTL-SDR news, tutorials and projects"
 )
 
 print_header() {
