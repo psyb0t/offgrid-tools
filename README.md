@@ -12,7 +12,6 @@ Docker Compose setup for when the internet dies and you still need to get shit d
 - [Preparing for the Apocalypse](#preparing-for-the-apocalypse)
   - [Download Docker Images](#download-docker-images)
   - [Android Apps](#android-apps)
-  - [Linux Packages](#linux-packages)
   - [Web Content Archives](#web-content-archives)
 - [Running the Stack](#running-the-stack)
 - [Ports & Access](#ports--access)
@@ -141,46 +140,6 @@ cd apps/android/apk
 - **BitChat** - Creates Bluetooth mesh networks for encrypted messaging across up to 7 device hops without internet. Revolutionary for survival communication and emergency coordination.
 - **KeePassDX** - Secure password manager that works completely offline with encrypted database files. Critical for maintaining access to accounts and services when internet-based password managers fail.
 - **SDR++ Software Defined Radio** - Advanced software defined radio application for Android. Essential for monitoring radio frequencies, emergency communications, and spectrum analysis when traditional communication infrastructure fails.
-
-### Linux Packages
-
-Pre-download Linux packages for offline installation:
-
-#### Ubuntu
-
-```bash
-cd apps/linux/deb
-
-# Download .deb packages
-./download.sh
-
-# Install them when offline
-sudo ./install.sh
-```
-
-**Packages included:**
-
-- Docker & Docker Compose
-- Android tools (ADB, Vysor)
-- Text editor (nano)
-- Development tools (Go, Python, PHP, geany IDE, build-essential, gcc, g++, make, cmake, gdb, valgrind, Git, Git LFS)
-- Web server (nginx)
-- Terminal emulator (Terminator)
-- VirtualBox for VMs
-- Media tools (FFmpeg, GIMP)
-- System monitoring (htop, iotop, nethogs)
-- Network tools (Wireshark, nmap, netcat)
-- File sync & backup (rsync, BorgBackup, Vorta GUI)
-- Software Defined Radio (GQRX, GNU Radio with dev tools, gr-osmosdr, RTL-SDR tools)
-- Radio software tools (FLDigi, QSSTV, Direwolf APRS, Multimon-NG decoder)
-- Satellite tracking (Gpredict)
-- Audio processing (SoX audio toolkit)
-- Data visualization (Gnuplot)
-- Audio streaming (BUTT, Mixxx)
-- Security (UFW firewall, KeePassXC password manager, SSH client/server, Aircrack-ng, MDK4)
-- Disk tools (TestDisk, GParted, NTFS-3G, ddrescue, GNOME Disks)
-- Archive utilities (zip, unzip, rar, unrar, 7-Zip, tar, gzip, bzip2, xz-utils, zstd, arj, lzip, cabextract)
-- System utilities (pv progress viewer, gdebi package installer)
 
 ### Bootable Images
 
@@ -313,7 +272,6 @@ ollama/data/          # AI models and SSH keys
 openwebui/data/       # Chat history and settings
 zim/data/             # Offline web archives
 apps/android/apk/data/    # Downloaded APK files
-apps/linux/deb/data/     # Downloaded .deb packages
 apps/iso/data/           # Downloaded ISO images
 docker-images/           # Saved Docker containers
 file-server/other-files/ # Custom files for web download

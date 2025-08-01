@@ -87,9 +87,8 @@ main() {
     echo -e "${CYAN}╭─────────────────────────────────────────────────────────────────╮${NC}"
     echo -e "${CYAN}│${NC} ${YELLOW}1.${NC} ${WHITE}Docker Images${NC} - Container images for offline use"
     echo -e "${CYAN}│${NC} ${YELLOW}2.${NC} ${WHITE}Android APKs${NC} - Essential mobile apps"
-    echo -e "${CYAN}│${NC} ${YELLOW}3.${NC} ${WHITE}Linux Packages${NC} - Ubuntu .deb files"
-    echo -e "${CYAN}│${NC} ${YELLOW}4.${NC} ${WHITE}ISO Images${NC} - Bootable operating systems"
-    echo -e "${CYAN}│${NC} ${YELLOW}5.${NC} ${WHITE}ZIM Archives${NC} - Offline content for Kiwix"
+    echo -e "${CYAN}│${NC} ${YELLOW}3.${NC} ${WHITE}ISO Images${NC} - Bootable operating systems"
+    echo -e "${CYAN}│${NC} ${YELLOW}4.${NC} ${WHITE}ZIM Archives${NC} - Offline content for Kiwix"
     echo -e "${CYAN}╰─────────────────────────────────────────────────────────────────╯${NC}"
     echo ""
     
@@ -104,7 +103,7 @@ main() {
     print_info "Starting download sequence..."
     
     # Track results
-    local total_scripts=5
+    local total_scripts=4
     local successful=0
     local failed=0
     local failed_scripts=()
@@ -113,7 +112,6 @@ main() {
     local downloads=(
         "$SCRIPT_DIR/save-docker-images.sh|Docker Images"
         "$SCRIPT_DIR/apps/android/apk/download.sh|Android APKs"
-        "$SCRIPT_DIR/apps/linux/deb/download.sh|Linux Packages"
         "$SCRIPT_DIR/apps/iso/download.sh|ISO Images"
         "$SCRIPT_DIR/zim/download.sh|ZIM Archives"
     )
