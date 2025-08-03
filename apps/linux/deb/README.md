@@ -1,21 +1,38 @@
 # Linux Package Collection
 
+This directory contains scripts to install a comprehensive collection of Linux packages for offline use. The packages are organized into categories for survival, development, and emergency preparedness scenarios.
+
+## Usage
+
+```bash
+# Install comprehensive survival toolkit
+./install.sh
+```
+
+The install script automatically downloads and installs ~280+ packages across system packages, Python libraries, and Flatpak applications.
+
+## Package Categories
+
 ### Development & Programming
 
 **Core Development Tools:**
 
 - **Python 3** - Programming language with scientific libraries (NumPy, SciPy, Matplotlib, PyDub) for data analysis, automation, and audio processing
+- **Python3-pip/venv** - Package installer and virtual environment support for isolated Python environments
 - **Go** - Fast compiled language ideal for system tools, network applications, and cross-platform development
 - **PHP** - Web development language with CLI and FPM for server applications
 - **GCC/G++/Make/CMake** - Complete C/C++ development toolchain for system programming and performance-critical applications
 - **Git/Git-LFS** - Version control for code and configuration management, essential for tracking changes in offline environments
 - **Build-essential** - Meta-package providing essential compilation tools and headers
+- **Dpkg-dev** - Debian package development tools for creating custom packages
+- **Libc6-dev** - GNU C Library development files for system programming
 
 **Development Environment:**
 
 - **Nano/Vim/Geany** - Text editors ranging from simple to advanced for code editing and configuration
 - **GDB/Valgrind** - Debugging tools for finding memory leaks, crashes, and performance issues
 - **Pkg-config** - Tool for managing library compilation flags and dependencies
+- **Sudo** - Execute commands as another user for system administration
 
 ### Containerization & Virtualization
 
@@ -32,12 +49,26 @@
 **Enterprise Virtualization (QEMU/KVM Stack):**
 
 - **QEMU System** - Full system emulation supporting x86, ARM, MIPS, PowerPC, and SPARC architectures
+- **QEMU-utils/QEMU-block-extra** - Additional QEMU utilities and block device drivers
+- **QEMU-guest-agent** - Guest agent for better VM integration and management
 - **KVM** - Kernel-based virtual machine for hardware-accelerated virtualization
 - **Libvirt** - Virtualization management API with daemon and client tools
 - **Virt-Manager/Virt-Viewer** - Graphical interfaces for creating and managing virtual machines
 - **Bridge-utils/Virtinst** - Network bridging and VM installation tools
 - **OVMF/SeaBIOS** - UEFI and legacy BIOS firmware for virtual machines
 - **VirtIO drivers** - High-performance paravirtualized drivers for storage and network
+
+**QEMU Display & Graphics:**
+
+- **SDL2 libraries** - Graphics and input libraries for QEMU display support
+- **SPICE** - Remote display protocol with client and agent for VM interaction
+- **VirGL/Mesa-utils** - Virtual GPU acceleration and OpenGL utilities
+
+**Audio Support for Virtual Machines:**
+
+- **PulseAudio** - Sound server system for routing audio in virtualized environments
+- **ALSA-utils** - Advanced Linux Sound Architecture utilities for audio configuration
+- **Pavucontrol** - PulseAudio volume control for managing VM audio streams
 
 **Windows Compatibility:**
 
@@ -200,10 +231,6 @@
 
 - **CalculiX** - Finite element analysis solver for structural and thermal analysis
 
-### Medical & Health
-
-_Currently no packages in this category - reserved for future medical software_
-
 ### Education & Knowledge
 
 **Learning Tools:**
@@ -211,8 +238,10 @@ _Currently no packages in this category - reserved for future medical software_
 - **Anki** - Spaced repetition flashcard system for memorizing large amounts of information
 - **Kalzium** - Periodic table of elements with detailed chemical information
 - **Step** - Interactive physics simulation environment
+
+### Office & Productivity
+
 - **LibreOffice** - Complete office suite for documents, spreadsheets, and presentations
-- **Espeak-ng** - Text-to-speech synthesizer supporting multiple languages
 
 ### System Administration & Monitoring
 
@@ -291,6 +320,7 @@ _Currently no packages in this category - reserved for future medical software_
 - **Kdenlive** - Professional video editing suite
 - **Audacity** - Multi-track audio editor and recorder
 - **Calibre** - E-book library management and conversion
+- **Espeak-ng** - Text-to-speech synthesizer supporting multiple languages
 
 ### Web & Server
 
@@ -317,15 +347,16 @@ _Currently no packages in this category - reserved for future medical software_
 **ISO Management:**
 
 - **Genisoimage/Xorriso** - Create ISO images from directories
-- **Isolinux/Syslinux** - Bootloaders for CD/USB boot media
+- **Isolinux/Syslinux** - Bootloaders for CD/USB boot media  
 - **Mtools/Dosfstools** - MS-DOS filesystem utilities
 - **Squashfs-tools** - Compressed read-only filesystem for live CDs
 - **Debootstrap** - Bootstrap Debian base system
 - **Live-build/Live-config/Live-boot** - Debian Live system creation tools
 - **GRUB2** - Grand Unified Bootloader for UEFI and legacy systems
 - **Casper** - Scripts for live CD/USB systems
-- **Ubiquity** - Ubuntu installer framework
+- **Ubiquity** - Ubuntu installer framework with GTK and KDE frontends
 - **mkisofs/cdrdao** - Additional ISO creation and CD/DVD burning tools
+- **dvd+rw-tools/cdrtools/wodim** - DVD and CD writing utilities for media creation
 
 ## Python Packages (via pip)
 
@@ -354,6 +385,9 @@ The installation also includes essential Python libraries:
 - **pyusb/pyftdi** - Direct USB device control
 - **gpiozero** - GPIO interface for Raspberry Pi compatibility
 - **pymodbus** - Industrial Modbus protocol support
+- **can** - CAN bus interface for automotive and industrial communication
+- **pynput** - Keyboard and mouse automation for controlling systems
+- **psutil** - System and hardware monitoring (CPU, memory, disk, network)
 
 **Data Analysis:**
 
@@ -364,6 +398,12 @@ The installation also includes essential Python libraries:
 
 - **sympy/astropy** - Symbolic math and astronomy calculations
 - **geopandas/folium** - Geographic data analysis and mapping
+
+**Medical & Bioinformatics:**
+
+- **pydicom** - Medical imaging library for reading and processing DICOM files from medical scanners
+- **nibabel** - Neuroimaging data processing for MRI, fMRI, and other brain imaging formats
+- **biopython** - Bioinformatics tools for DNA/RNA sequence analysis, protein structures, and genomics
 
 **Exploitation & Security:**
 
@@ -378,11 +418,12 @@ The installation also includes essential Python libraries:
 
 ## Installation Notes
 
-- The download script resolves all dependencies automatically using a clean Docker container
+- The install script automatically downloads and resolves all dependencies 
 - Repository setup includes Docker CE, Go PPA, and VirtualBox repositories
 - Installation handles dependency conflicts and continues on individual package failures
 - All operations are logged to `install-packages.log` for troubleshooting
 - Python packages are installed with `--break-system-packages` flag for modern systems
 - Flatpak packages require Flathub repository setup (handled automatically)
+- Total package count: ~280+ across system packages, Python libraries, and Flatpak applications
 
 This comprehensive package collection provides everything needed for offline development, security analysis, emergency communication, and system administration in isolated environments.
