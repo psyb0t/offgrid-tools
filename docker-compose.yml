@@ -125,7 +125,6 @@ services:
       - ./file-server/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./file-server/entrypoint.sh:/entrypoint.sh:ro
       - ./apps/android/apk/data:/var/www/html/apk:ro
-      - ./apps/linux/deb/data:/var/www/html/deb:ro
       - ./apps/iso/data:/var/www/html/iso:ro
       - ./docker-images:/var/www/html/docker-images:ro
       - ./zim/data:/var/www/html/zim:ro

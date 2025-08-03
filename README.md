@@ -11,8 +11,11 @@ Docker Compose setup for when the internet dies and you still need to get shit d
 - [Services Overview](#services-overview)
 - [Preparing for the Apocalypse](#preparing-for-the-apocalypse)
   - [Download Docker Images](#download-docker-images)
+  - [Linux Packages](#linux-packages)
   - [Android Apps](#android-apps)
+  - [Bootable Images](#bootable-images)
   - [Web Content Archives](#web-content-archives)
+  - [Offline Maps](#offline-maps)
 - [Running the Stack](#running-the-stack)
 - [Ports & Access](#ports--access)
 - [Data & Storage](#data--storage)
@@ -114,6 +117,21 @@ This downloads:
 - Web server (Nginx)
 - Development environments (Python, Go, Ubuntu)
 
+### Linux Packages
+
+Install essential development and survival tools for Ubuntu/Debian systems:
+
+```bash
+cd apps/linux/deb
+
+# Install comprehensive survival toolkit
+./install.sh
+```
+
+The install script automatically downloads and installs a comprehensive survival toolkit including Docker, development tools, SDR software, security tools, virtualization, and more. It handles repository setup, dependency resolution, and package installation with automatic error handling.
+
+See [apps/linux/deb/README.md](apps/linux/deb/README.md) for detailed package descriptions and use cases.
+
 ### Android Apps
 
 Get essential Android apps for when Google Play is unavailable:
@@ -135,27 +153,6 @@ cd apps/android/apk
 - **Termux** - Full Linux terminal environment on Android with programming languages and security tools. Essential for technical users needing development tools offline.
 - **VLC** - Universal media player for any audio/video format stored locally. Valuable for instructional videos, emergency broadcasts, and entertainment.
 - **Organic Maps** - Completely offline navigation with OpenStreetMap data including hiking trails. Critical for GPS navigation in remote areas without cellular coverage. Also available as Linux Flatpak app.
-
-### Offline Maps
-
-Download map data for Organic Maps:
-
-```bash
-cd maps
-
-# List all available maps
-./maps.sh list
-
-# Search for specific regions
-./maps.sh list romania
-./maps.sh list united
-
-# Download maps (downloads to maps/data/)
-./maps.sh list romania | ./maps.sh download
-```
-
-Map files (.mwm format) are automatically downloaded to `maps/data/` and can be transferred to Android devices or used with the Linux Flatpak version of Organic Maps.
-
 - **Briar Messenger** - Secure decentralized messaging via Bluetooth/WiFi without internet or servers. Essential for emergency communication when networks are down.
 - **Briar Mailbox** - Message relay service for Briar that stores encrypted messages when recipients are offline. Maintains communication continuity in survival groups.
 - **BitChat** - Creates Bluetooth mesh networks for encrypted messaging across up to 7 device hops without internet. Revolutionary for survival communication and emergency coordination.
@@ -245,6 +242,26 @@ cd zim
 ```
 
 ZIM files work with Kiwix and contain entire websites with search capability.
+
+### Offline Maps
+
+Download map data for Organic Maps:
+
+```bash
+cd maps
+
+# List all available maps
+./maps.sh list
+
+# Search for specific regions
+./maps.sh list romania
+./maps.sh list united
+
+# Download maps (downloads to maps/data/)
+./maps.sh list romania | ./maps.sh download
+```
+
+Map files (.mwm format) are automatically downloaded to `maps/data/` and can be transferred to Android devices or used with the Linux Flatpak version of Organic Maps.
 
 ## Running the Stack
 
