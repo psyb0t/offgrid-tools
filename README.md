@@ -134,7 +134,28 @@ cd apps/android/apk
 - **F-Droid** - Open source app store for privacy-focused apps that work without Google services. Critical for building an offline toolkit independently.
 - **Termux** - Full Linux terminal environment on Android with programming languages and security tools. Essential for technical users needing development tools offline.
 - **VLC** - Universal media player for any audio/video format stored locally. Valuable for instructional videos, emergency broadcasts, and entertainment.
-- **Organic Maps** - Completely offline navigation with OpenStreetMap data including hiking trails. Critical for GPS navigation in remote areas without cellular coverage.
+- **Organic Maps** - Completely offline navigation with OpenStreetMap data including hiking trails. Critical for GPS navigation in remote areas without cellular coverage. Also available as Linux Flatpak app.
+
+### Offline Maps
+
+Download map data for Organic Maps:
+
+```bash
+cd maps
+
+# List all available maps
+./maps.sh list
+
+# Search for specific regions
+./maps.sh list romania
+./maps.sh list united
+
+# Download maps (downloads to maps/data/)
+./maps.sh list romania | ./maps.sh download
+```
+
+Map files (.mwm format) are automatically downloaded to `maps/data/` and can be transferred to Android devices or used with the Linux Flatpak version of Organic Maps.
+
 - **Briar Messenger** - Secure decentralized messaging via Bluetooth/WiFi without internet or servers. Essential for emergency communication when networks are down.
 - **Briar Mailbox** - Message relay service for Briar that stores encrypted messages when recipients are offline. Maintains communication continuity in survival groups.
 - **BitChat** - Creates Bluetooth mesh networks for encrypted messaging across up to 7 device hops without internet. Revolutionary for survival communication and emergency coordination.
@@ -253,7 +274,7 @@ Once running, access services at:
 - **http://localhost:8002** - Ollama Chat Party (multi-user AI chat room with RAG support)
 - **http://localhost:8003** - TheLounge (IRC web client)
 - **http://localhost:8004** - Icecast (audio streaming server)
-- **http://localhost:8005** - File Server (download APKs, DEBs, ISOs, ZIM files, Docker images, other files)
+- **http://localhost:8005** - File Server (download APKs, ISOs, ZIM files, Docker images, other files)
 
 **Default credentials:**
 

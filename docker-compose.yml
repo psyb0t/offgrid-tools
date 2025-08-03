@@ -129,6 +129,7 @@ services:
       - ./apps/iso/data:/var/www/html/iso:ro
       - ./docker-images:/var/www/html/docker-images:ro
       - ./zim/data:/var/www/html/zim:ro
+      - ./maps/data:/var/www/html/maps:ro
       - ./file-server/other-files:/var/www/html/other-files
     environment:
       - FILE_SERVER_AUTH=offgrid:offgrid123
