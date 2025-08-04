@@ -12,6 +12,7 @@ Docker Compose setup for when the internet dies and you still need to get shit d
 - [Preparing for the Apocalypse](#preparing-for-the-apocalypse)
   - [Download Docker Images](#download-docker-images)
   - [Linux Packages](#linux-packages)
+  - [Offgrid Ubuntu Virtual Machine](#offgrid-ubuntu-virtual-machine)
   - [Android Apps](#android-apps)
   - [Bootable Images](#bootable-images)
   - [Web Content Archives](#web-content-archives)
@@ -32,6 +33,7 @@ This is a completely self-contained offline environment that runs on Docker. Whe
 - **Audio streaming & radio** (broadcast to your local network, monitor emergency frequencies)
 - **Development tools** (code without the cloud)
 - **Mobile app installer** (side-load apps when Google Play is down)
+- **Pre-configured Ubuntu VM** (280+ survival tools pre-installed, boot and go)
 
 The whole thing is designed to work with **zero internet connection**. Everything gets downloaded once, then you're independent.
 
@@ -131,6 +133,28 @@ cd apps/linux/deb
 The install script automatically downloads and installs a comprehensive survival toolkit including Docker, development tools, SDR software, security tools, virtualization, and more. It handles repository setup, dependency resolution, and package installation with automatic error handling.
 
 See [apps/linux/deb/README.md](apps/linux/deb/README.md) for detailed package descriptions and use cases.
+
+### Offgrid Ubuntu Virtual Machine
+
+Download a pre-configured Ubuntu VM with all packages already installed:
+
+```bash
+cd ubuntu
+
+# Download VM in your preferred format
+./get-qcow2.sh    # For QEMU/KVM
+./get-vdi.sh      # For VirtualBox  
+./get-vhdx.sh     # For Hyper-V
+
+# Run with QEMU (16GB RAM, 8 cores)
+./run-qcow2.sh
+```
+
+**VM Details:**
+- **OS**: Ubuntu with XFCE desktop
+- **User**: `offgrid` / Password: `offgrid`
+- **Packages**: All ~280+ packages from the survival toolkit pre-installed
+- **Ready to use**: No installation needed, boot and go
 
 ### Android Apps
 

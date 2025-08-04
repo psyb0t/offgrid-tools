@@ -71,7 +71,7 @@ PACKAGES=(
     # ============================================================================
     # Software Defined Radio
     "gqrx-sdr" "gnuradio-dev" "gr-osmosdr" "rtl-sdr"
-    "libliquid-dev" "libliquid1"
+    "libliquid-dev" "libliquid1" "libtalloc-dev"
 
     # Digital Modes & Protocols
     "fldigi" "qsstv" "direwolf" "multimon-ng" "minimodem"
@@ -383,7 +383,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 log "📦 Installing Flatpak packages..."
 for package in "${FLATPAK_PACKAGES[@]}"; do
     log "Installing Flatpak package: $package"
-    
+
     if ! flatpak install -y flathub "$package" 2>&1 | tee -a "$LOG_FILE"; then
         log "❌ FAILED: $package (flatpak) (continuing with other packages)"
     fi
