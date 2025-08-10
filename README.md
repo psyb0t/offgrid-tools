@@ -99,26 +99,61 @@ Run large language models locally using llama.cpp Docker containers. Models run 
 ```bash
 cd llama
 
-# Run with CPU only
+# Basic usage with default parameters
 ./run-cpu.sh model_name.gguf
-
-# Run with GPU acceleration (requires NVIDIA GPU)
 ./run-gpu.sh model_name.gguf
+
+# Custom parameters for fine-tuned control
+./run-cpu.sh model_name.gguf --temp 0.7 --repeat-penalty 1.5 --top-p 0.95
+./run-gpu.sh model_name.gguf --ctx-size 4096 -n 256 --seed 42
+
+# Get help and see all available parameters
+./run-cpu.sh --help
+./run-gpu.sh --help
 
 # List available models
 ./run-cpu.sh
 ```
+
+**Advanced Parameters:**
+The scripts support comprehensive llama.cpp parameters including:
+- **Sampling**: `--temp`, `--top-p`, `--top-k`, `--repeat-penalty`, `--repeat-last-n`
+- **Generation**: `--ctx-size`, `-n`, `--seed`, `--chat-template`
+- **Performance**: `--threads`, `-b` (batch size), `--mirostat`
+- **Output**: `--color` for enhanced readability
+- **System Messages**: `--system "prompt"` or `--system-prompt-file filename.txt`
+
+**Pre-built System Prompts:**
+The `system-prompts/` directory contains ready-to-use personality templates:
+- `generic.txt` - Standard helpful assistant (default)
+- `coding.txt` - Expert software engineer and debugging specialist
+- `creative.txt` - Creative writing assistant for stories and content
+- `technical.txt` - Technical documentation and system administration expert
+- `anarchist.txt` - No-filter anarchist polymath with expertise in everything
 
 **Examples:**
 ```bash
 # Download a model (example)
 wget -P llama/data/ https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/model.gguf
 
-# Run the model
+# Run with default settings
 ./llama/run-cpu.sh gpt-oss-20b-Q4_K_M.gguf
+
+# Run with custom parameters for creative writing
+./llama/run-cpu.sh gpt-oss-20b-Q4_K_M.gguf --temp 0.9 --top-p 0.8 --repeat-penalty 1.2
+
+# Run with deterministic output for coding tasks
+./llama/run-gpu.sh gpt-oss-20b-Q4_K_M.gguf --temp 0.3 --top-k 20 -n 512
+
+# Use pre-built system prompts
+./llama/run-cpu.sh gpt-oss-20b-Q4_K_M.gguf --system-prompt-file coding.txt
+./llama/run-gpu.sh OpenAI-20B-NEO-Uncensored2-IQ4_NL.gguf --system-prompt-file anarchist.txt --temp 0.9
+
+# Custom system message
+./llama/run-cpu.sh gpt-oss-20b-Q4_K_M.gguf --system "You are a Linux expert who provides command examples"
 ```
 
-The scripts automatically validate model files, provide helpful error messages, and share common functionality through `common.sh`. GPU acceleration requires Docker with NVIDIA Container Runtime installed.
+The scripts automatically validate model files, provide comprehensive help, and share common functionality through `common.sh`. All standard llama.cpp parameters are supported. GPU acceleration requires Docker with NVIDIA Container Runtime installed.
 
 ## Preparing for the Apocalypse
 
@@ -367,6 +402,7 @@ All important data persists in these directories:
 ollama/data/          # AI models and SSH keys
 openwebui/data/       # Chat history and settings
 llama/data/           # Local GGUF models for llama.cpp
+llama/system-prompts/ # System prompt templates for AI personalities
 zim/data/             # Offline web archives
 apps/android/apk/data/    # Downloaded APK files
 apps/iso/data/           # Downloaded ISO images
