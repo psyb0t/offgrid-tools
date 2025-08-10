@@ -92,7 +92,7 @@ Web-based file browser for downloading all offline content via HTTP. Serves file
 Run large language models locally using llama.cpp Docker containers. Models run completely offline with no external dependencies.
 
 **Adding Models:**
-- Download GGUF format models and place them in `llama/data/`
+- Download GGUF format models and place them in `llama/models/`
 - Models should be quantized (Q4_K_M, Q5_K_M, etc.) for optimal performance
 
 **Running Models:**
@@ -135,7 +135,7 @@ The `system-prompts/` directory contains ready-to-use personality templates that
 **Examples:**
 ```bash
 # Download a model (example)
-wget -P llama/data/ https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/model.gguf
+wget -P llama/models/ https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/model.gguf
 
 # Run with default settings (CPU mode)
 ./llama/run-cpu-gui.sh gpt-oss-20b-Q4_K_M.gguf
@@ -401,7 +401,7 @@ All important data persists in these directories:
 ```
 ollama/data/          # AI models and SSH keys
 openwebui/data/       # Chat history and settings
-llama/data/           # Local GGUF models for llama.cpp
+llama/models/         # Local GGUF models for llama.cpp
 llama/system-prompts/ # System prompt templates for AI personalities
 zim/data/             # Offline web archives
 apps/android/apk/data/    # Downloaded APK files

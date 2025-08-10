@@ -2,6 +2,10 @@
 **/data/*
 !**/data/.gitkeep
 
+# Llama models - ignore all models but keep .gitkeep
+llama/models/*
+!llama/models/.gitkeep
+
 # Docker images archive - ignore all except .gitkeep
 docker-images/*
 !docker-images/.gitkeep
