@@ -46,34 +46,34 @@ get_common_docker_params() {
 # Get base llama.cpp parameters with standard defaults
 get_base_llama_params() {
     local model_path="$1"
-    
+
     # Core model and mode settings
     local params="-m \"$model_path\""
     params="$params -cnv"                      # Enable conversation mode
-    
+
     # Context and generation settings
     params="$params --ctx-size 8192"           # Context window size
     params="$params -n -1"                     # Generate unlimited tokens (until stop)
     params="$params --chat-template chatml"    # Chat template format
-    
+
     # Sampling parameters for quality output
     params="$params --temp 0.8"                # Temperature (0.0-2.0, default 0.8)
     params="$params --top-p 0.9"               # Top-p nucleus sampling (0.0-1.0, default 0.9)
     params="$params --top-k 40"                # Top-k sampling (default 40)
     params="$params --repeat-penalty 1.1"     # Repetition penalty (default 1.1)
     params="$params --repeat-last-n 64"       # Last N tokens to penalize (default 64)
-    
+
     # Performance and threading
     params="$params --threads -1"              # Auto-detect CPU threads
     params="$params -b 512"                   # Batch size for prompt processing
-    
+
     # Additional settings
     params="$params --seed -1"                 # Random seed (-1 = random)
     params="$params --mirostat 0"              # Mirostat sampling (0=disabled, 1=v1, 2=v2)
-    
+
     # Output formatting
     params="$params --color"                   # Enable colored output
-    
+
     echo "$params"
 }
 
@@ -81,14 +81,14 @@ get_base_llama_params() {
 get_custom_llama_params() {
     local model_path="$1"
     shift  # Remove model_path from arguments
-    
+
     # Start with base parameters
     local params=$(get_base_llama_params "$model_path")
-    
+
     # Process arguments and resolve system prompt paths
     local processed_args=""
     local prev_arg=""
-    
+
     for arg in "$@"; do
         if [[ "$prev_arg" == "--system-prompt-file" ]]; then
             # Resolve the system prompt file path
@@ -99,12 +99,12 @@ get_custom_llama_params() {
         fi
         prev_arg="$arg"
     done
-    
+
     # Add processed arguments
     if [ ${#processed_args} -gt 0 ]; then
         params="$params$processed_args"
     fi
-    
+
     echo "$params"
 }
 
@@ -114,7 +114,7 @@ show_parameter_help() {
     echo ""
     echo "Sampling Parameters:"
     echo "  --temp 0.8              Temperature (0.0-2.0, lower=deterministic)"
-    echo "  --top-p 0.9             Top-p nucleus sampling (0.0-1.0)" 
+    echo "  --top-p 0.9             Top-p nucleus sampling (0.0-1.0)"
     echo "  --top-k 40              Top-k sampling (number of tokens)"
     echo "  --repeat-penalty 1.1    Repetition penalty (>1.0 reduces repetition)"
     echo "  --repeat-last-n 64      Last N tokens to consider for penalty"
@@ -135,6 +135,7 @@ show_parameter_help() {
     echo "Performance:"
     echo "  --threads 8             Number of CPU threads (-1 = auto)"
     echo "  -b 512                  Batch size for processing"
+    echo "  --ngl 20                Number of GPU layers (GPU mode only)"
     echo ""
     echo "Advanced Sampling:"
     echo "  --mirostat 2            Mirostat sampling (0=off, 1=v1, 2=v2)"
@@ -145,6 +146,7 @@ show_parameter_help() {
     echo "Examples:"
     echo "  ./run-cpu.sh model.gguf --temp 0.7 --top-p 0.95 -n 256"
     echo "  ./run-gpu.sh model.gguf --repeat-penalty 1.5 --repeat-last-n 64"
+    echo "  ./run-gpu.sh model.gguf --ngl 20 --temp 0.8"
     echo "  ./run-cpu.sh model.gguf --system \"You are a helpful coding assistant\""
     echo "  ./run-gpu.sh model.gguf --system-prompt-file coding.txt"
     echo "  ./run-cpu.sh model.gguf --system-prompt-file anarchist.txt --temp 0.9"
@@ -153,24 +155,24 @@ show_parameter_help() {
 # Add system message parameters if available
 add_system_message_params() {
     local params="$1"
-    
+
     # Check if default generic.txt exists and no custom system message is set
     if [ -f "system-prompts/generic.txt" ] && [[ "$params" != *"--system"* ]]; then
         params="$params --system-prompt-file /system-prompts/generic.txt"
     fi
-    
+
     echo "$params"
 }
 
 # Resolve system prompt file path (allow short names)
 resolve_system_prompt_path() {
     local prompt_arg="$1"
-    
+
     # If it's a --system-prompt-file argument, check if it's just a filename
     if [[ "$prompt_arg" == "--system-prompt-file" ]]; then
         return 0  # Let the next argument be processed
     fi
-    
+
     # If it looks like just a filename (no path separators), prepend system-prompts path
     if [[ "$prompt_arg" != *"/"* ]] && [[ "$prompt_arg" == *.txt ]]; then
         echo "/system-prompts/$prompt_arg"
@@ -183,7 +185,7 @@ resolve_system_prompt_path() {
 run_llama_model() {
     local engine_type="$1"
     shift
-    
+
     # Check for help flag
     if [[ "$1" == "--help" || "$1" == "-h" ]]; then
         echo "Usage: $(basename "$0") <model_name.gguf> [additional_params...]"
@@ -193,14 +195,14 @@ run_llama_model() {
         show_parameter_help
         exit 0
     fi
-    
+
     # Validate model and get model name
     MODEL_NAME=$(validate_model "$(basename "$0")" "$@")
-    
+
     # Get paths and parameters (including any additional arguments)
     MODEL_PATH=$(get_model_path "$MODEL_NAME")
     DOCKER_PARAMS=$(get_common_docker_params)
-    
+
     # Get parameters with any additional arguments after model name
     # Skip the model name (first argument) and pass the rest
     shift  # Remove model name
@@ -209,22 +211,25 @@ run_llama_model() {
     else
         LLAMA_PARAMS=$(get_base_llama_params "$MODEL_PATH")
     fi
-    
+
     # Add system message if available (and not overridden by user)
     LLAMA_PARAMS=$(add_system_message_params "$LLAMA_PARAMS")
-    
+
     # Set Docker image and additional parameters based on engine type
     if [[ "$engine_type" == "gpu" ]]; then
         echo "Running llama.cpp with GPU acceleration and model: $MODEL_NAME"
         DOCKER_IMAGE="ghcr.io/ggml-org/llama.cpp:light-cuda"
         DOCKER_GPU="--gpus all"
-        LLAMA_PARAMS="$LLAMA_PARAMS --n-gpu-layers 20"
+        # Add default GPU layers if not already specified by user
+        if [[ "$LLAMA_PARAMS" != *"--ngl"* ]]; then
+            LLAMA_PARAMS="$LLAMA_PARAMS --ngl 20"
+        fi
     else
         echo "Running llama.cpp with model: $MODEL_NAME"
         DOCKER_IMAGE="ghcr.io/ggml-org/llama.cpp:light"
         DOCKER_GPU=""
     fi
-    
+
     # Run Docker container
     eval "docker run $DOCKER_GPU $DOCKER_PARAMS $DOCKER_IMAGE $LLAMA_PARAMS"
 }
@@ -233,10 +238,17 @@ run_llama_model() {
 run_llama_server() {
     local engine_type="$1"
     shift
-    
+
     # Check for help flag or no arguments
     if [[ "$1" == "--help" || "$1" == "-h" || $# -eq 0 ]]; then
-        echo "Usage: $(basename "$0") <model_name.gguf>"
+        if [[ "$engine_type" == "gpu" ]]; then
+            echo "Usage: $(basename "$0") <model_name.gguf> [--ngl layers]"
+            echo ""
+            echo "  --ngl layers: Number of layers to offload to GPU (default: 999 for all layers)"
+            echo "                Use 0 for CPU-only processing"
+        else
+            echo "Usage: $(basename "$0") <model_name.gguf>"
+        fi
         echo ""
         echo "Starts llama.cpp server with web UI at http://localhost:9000"
         echo "All parameters (temperature, system prompts, etc.) can be configured in the web UI."
@@ -247,32 +259,54 @@ run_llama_server() {
         fi
         exit 0
     fi
-    
-    # Validate model and get model name (no additional args)
+
+    # Validate model and get model name
     MODEL_NAME=$(validate_model "$(basename "$0")" "$1" "dummy")
     
+    # Parse --ngl parameter if provided (GPU mode only)
+    GPU_LAYERS=""
+    if [[ "$engine_type" == "gpu" && $# -gt 1 ]]; then
+        if [[ "$2" == "--ngl" && $# -gt 2 ]]; then
+            GPU_LAYERS="$3"
+            # Validate it's a number
+            if ! [[ "$GPU_LAYERS" =~ ^[0-9]+$ ]]; then
+                echo "Error: --ngl parameter must be a number"
+                exit 1
+            fi
+        else
+            echo "Error: Invalid parameter. Use --ngl <number> to specify GPU layers"
+            exit 1
+        fi
+    fi
+
     # Get paths and basic parameters only
     MODEL_PATH=$(get_model_path "$MODEL_NAME")
     DOCKER_PARAMS=$(get_server_docker_params)
     SERVER_PARAMS=$(get_base_server_params "$MODEL_PATH")
-    
+
     # Set Docker image based on engine type
     if [[ "$engine_type" == "gpu" ]]; then
         echo "Starting llama.cpp server with GPU acceleration and model: $MODEL_NAME"
+        if [[ -n "$GPU_LAYERS" ]]; then
+            echo "GPU layers: $GPU_LAYERS"
+            SERVER_PARAMS="$SERVER_PARAMS -ngl $GPU_LAYERS"
+        else
+            echo "GPU layers: 999 (all layers)"
+            SERVER_PARAMS="$SERVER_PARAMS -ngl 999"
+        fi
         echo "Web UI will be available at: http://localhost:9000"
         DOCKER_IMAGE="ghcr.io/ggml-org/llama.cpp:server-cuda"
         DOCKER_GPU="--gpus all"
-        SERVER_PARAMS="$SERVER_PARAMS -ngl 999"  # Offload all layers to GPU
     else
         echo "Starting llama.cpp server with model: $MODEL_NAME"
         echo "Web UI will be available at: http://localhost:9000"
         DOCKER_IMAGE="ghcr.io/ggml-org/llama.cpp:server"
         DOCKER_GPU=""
     fi
-    
+
     echo "Configure temperature, system prompts, and other settings in the web UI."
     echo ""
-    
+
     # Run Docker container
     eval "docker run $DOCKER_GPU $DOCKER_PARAMS $DOCKER_IMAGE $SERVER_PARAMS"
 }
@@ -285,12 +319,11 @@ get_server_docker_params() {
 # Get base server parameters
 get_base_server_params() {
     local model_path="$1"
-    
+
     # Minimal server parameters - everything else configurable in UI
     local params="-m \"$model_path\""
     params="$params --host 0.0.0.0"               # Listen on all interfaces
     params="$params --port 9000"                  # Server port
-    
+
     echo "$params"
 }
-

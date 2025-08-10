@@ -104,12 +104,13 @@ cd llama
 ./run-gpu.sh model_name.gguf
 
 # Web UI server mode (configure everything in browser)
-./run-cpu-gui.sh model_name.gguf      # Available at http://localhost:9000
-./run-gpu-gui.sh model_name.gguf      # Available at http://localhost:9000
+./run-cpu-gui.sh model_name.gguf                    # Available at http://localhost:9000
+./run-gpu-gui.sh model_name.gguf                    # Available at http://localhost:9000
+./run-gpu-gui.sh model_name.gguf --ngl 20           # GPU layers configurable
 
 # Custom parameters for CLI mode
 ./run-cpu.sh model_name.gguf --temp 0.7 --repeat-penalty 1.5 --top-p 0.95
-./run-gpu.sh model_name.gguf --ctx-size 4096 -n 256 --seed 42
+./run-gpu.sh model_name.gguf --ctx-size 4096 -n 256 --seed 42 --ngl 25
 
 # Get help and see all available parameters
 ./run-cpu.sh --help
@@ -124,13 +125,13 @@ cd llama
 The CLI scripts (`run-cpu.sh`, `run-gpu.sh`) support comprehensive llama.cpp parameters:
 - **Sampling**: `--temp`, `--top-p`, `--top-k`, `--repeat-penalty`, `--repeat-last-n`
 - **Generation**: `--ctx-size`, `-n`, `--seed`, `--chat-template`
-- **Performance**: `--threads`, `-b` (batch size), `--mirostat`
+- **Performance**: `--threads`, `-b` (batch size), `--ngl` (GPU layers), `--mirostat`
 - **Output**: `--color` for enhanced readability
 - **System Messages**: `--system "prompt"` or `--system-prompt-file filename.txt`
 
 **GUI Server Mode:**
 The GUI scripts (`run-cpu-gui.sh`, `run-gpu-gui.sh`) are simplified:
-- **No command-line parameters** - just model name
+- **Minimal parameters** - model name only (`run-cpu-gui.sh`) or model name + `--ngl` layers (`run-gpu-gui.sh`)
 - **Web interface** - Configure all settings at `http://localhost:9000`
 - **Browser-based** - Set temperature, system prompts, sampling in UI
 - **Multi-user** - Multiple people can chat simultaneously
