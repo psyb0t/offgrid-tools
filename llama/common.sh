@@ -228,3 +228,69 @@ run_llama_model() {
     # Run Docker container
     eval "docker run $DOCKER_GPU $DOCKER_PARAMS $DOCKER_IMAGE $LLAMA_PARAMS"
 }
+
+# Server runner function - handles both CPU and GPU server modes
+run_llama_server() {
+    local engine_type="$1"
+    shift
+    
+    # Check for help flag or no arguments
+    if [[ "$1" == "--help" || "$1" == "-h" || $# -eq 0 ]]; then
+        echo "Usage: $(basename "$0") <model_name.gguf>"
+        echo ""
+        echo "Starts llama.cpp server with web UI at http://localhost:9000"
+        echo "All parameters (temperature, system prompts, etc.) can be configured in the web UI."
+        echo ""
+        if [ $# -eq 0 ]; then
+            echo "Available models:"
+            list_available_models
+        fi
+        exit 0
+    fi
+    
+    # Validate model and get model name (no additional args)
+    MODEL_NAME=$(validate_model "$(basename "$0")" "$1" "dummy")
+    
+    # Get paths and basic parameters only
+    MODEL_PATH=$(get_model_path "$MODEL_NAME")
+    DOCKER_PARAMS=$(get_server_docker_params)
+    SERVER_PARAMS=$(get_base_server_params "$MODEL_PATH")
+    
+    # Set Docker image based on engine type
+    if [[ "$engine_type" == "gpu" ]]; then
+        echo "Starting llama.cpp server with GPU acceleration and model: $MODEL_NAME"
+        echo "Web UI will be available at: http://localhost:9000"
+        DOCKER_IMAGE="ghcr.io/ggml-org/llama.cpp:server-cuda"
+        DOCKER_GPU="--gpus all"
+        SERVER_PARAMS="$SERVER_PARAMS -ngl 999"  # Offload all layers to GPU
+    else
+        echo "Starting llama.cpp server with model: $MODEL_NAME"
+        echo "Web UI will be available at: http://localhost:9000"
+        DOCKER_IMAGE="ghcr.io/ggml-org/llama.cpp:server"
+        DOCKER_GPU=""
+    fi
+    
+    echo "Configure temperature, system prompts, and other settings in the web UI."
+    echo ""
+    
+    # Run Docker container
+    eval "docker run $DOCKER_GPU $DOCKER_PARAMS $DOCKER_IMAGE $SERVER_PARAMS"
+}
+
+# Get server-specific Docker parameters (includes port mapping)
+get_server_docker_params() {
+    echo "-it --rm -v \"$(pwd)/data\":/data -p 9000:9000"
+}
+
+# Get base server parameters
+get_base_server_params() {
+    local model_path="$1"
+    
+    # Minimal server parameters - everything else configurable in UI
+    local params="-m \"$model_path\""
+    params="$params --host 0.0.0.0"               # Listen on all interfaces
+    params="$params --port 9000"                  # Server port
+    
+    echo "$params"
+}
+

@@ -24,6 +24,8 @@ print_images_info() {
     echo "  🎉 Ollama Chat Party: $([ "$show_names" == "true" ] && echo "psyb0t/ollama-chat-party:latest" || echo "for RAG-enabled chat")"
     echo "  🦙 LLaMA.cpp CPU: $([ "$show_names" == "true" ] && echo "ghcr.io/ggml-org/llama.cpp:light" || echo "for local LLM inference")"
     echo "  🦙 LLaMA.cpp GPU: $([ "$show_names" == "true" ] && echo "ghcr.io/ggml-org/llama.cpp:light-cuda" || echo "for GPU-accelerated LLM inference")"
+    echo "  🖥️  LLaMA.cpp Server CPU: $([ "$show_names" == "true" ] && echo "ghcr.io/ggml-org/llama.cpp:server" || echo "for local LLM server with web UI")"
+    echo "  🖥️  LLaMA.cpp Server GPU: $([ "$show_names" == "true" ] && echo "ghcr.io/ggml-org/llama.cpp:server-cuda" || echo "for GPU LLM server with web UI")"
     echo "  💬 TheLounge: $([ "$show_names" == "true" ] && echo "thelounge/thelounge:latest" || echo "for web-based IRC client")"
     echo "  🌐 InspIRCd: $([ "$show_names" == "true" ] && echo "inspircd/inspircd-docker:latest" || echo "for IRC server hosting")"
     echo "  📻 Icecast: $([ "$show_names" == "true" ] && echo "libretime/icecast:latest" || echo "for audio streaming")"
@@ -53,6 +55,8 @@ IMAGES=(
     # LLaMA.cpp runtime containers
     "ghcr.io/ggml-org/llama.cpp:light"      # CPU-only llama.cpp runtime
     "ghcr.io/ggml-org/llama.cpp:light-cuda" # GPU-enabled llama.cpp runtime
+    "ghcr.io/ggml-org/llama.cpp:server"     # CPU-only llama.cpp server with web UI
+    "ghcr.io/ggml-org/llama.cpp:server-cuda" # GPU-enabled llama.cpp server with web UI
     
     # IRC chat network
     "thelounge/thelounge:latest"    # Web-based IRC client

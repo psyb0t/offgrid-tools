@@ -99,11 +99,15 @@ Run large language models locally using llama.cpp Docker containers. Models run 
 ```bash
 cd llama
 
-# Basic usage with default parameters
+# Terminal/CLI chat mode
 ./run-cpu.sh model_name.gguf
 ./run-gpu.sh model_name.gguf
 
-# Custom parameters for fine-tuned control
+# Web UI server mode (configure everything in browser)
+./run-cpu-gui.sh model_name.gguf      # Available at http://localhost:9000
+./run-gpu-gui.sh model_name.gguf      # Available at http://localhost:9000
+
+# Custom parameters for CLI mode
 ./run-cpu.sh model_name.gguf --temp 0.7 --repeat-penalty 1.5 --top-p 0.95
 ./run-gpu.sh model_name.gguf --ctx-size 4096 -n 256 --seed 42
 
@@ -113,17 +117,25 @@ cd llama
 
 # List available models
 ./run-cpu.sh
+./run-cpu-gui.sh
 ```
 
-**Advanced Parameters:**
-The scripts support comprehensive llama.cpp parameters including:
+**CLI Mode Parameters:**
+The CLI scripts (`run-cpu.sh`, `run-gpu.sh`) support comprehensive llama.cpp parameters:
 - **Sampling**: `--temp`, `--top-p`, `--top-k`, `--repeat-penalty`, `--repeat-last-n`
 - **Generation**: `--ctx-size`, `-n`, `--seed`, `--chat-template`
 - **Performance**: `--threads`, `-b` (batch size), `--mirostat`
 - **Output**: `--color` for enhanced readability
 - **System Messages**: `--system "prompt"` or `--system-prompt-file filename.txt`
 
-**Pre-built System Prompts:**
+**GUI Server Mode:**
+The GUI scripts (`run-cpu-gui.sh`, `run-gpu-gui.sh`) are simplified:
+- **No command-line parameters** - just model name
+- **Web interface** - Configure all settings at `http://localhost:9000`
+- **Browser-based** - Set temperature, system prompts, sampling in UI
+- **Multi-user** - Multiple people can chat simultaneously
+
+**Pre-built System Prompts (CLI Mode Only):**
 The `system-prompts/` directory contains ready-to-use personality templates:
 - `generic.txt` - Standard helpful assistant (default)
 - `coding.txt` - Expert software engineer and debugging specialist
