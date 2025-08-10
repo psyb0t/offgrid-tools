@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # Load Docker images from saved tar files for offline use
 
-set -euo pipefail
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 IMAGES_DIR="${SCRIPT_DIR}/docker-images"
 
@@ -34,7 +32,7 @@ for tarfile in "$IMAGES_DIR"/*.tar; do
     if [[ -f "$tarfile" ]]; then
         filename=$(basename "$tarfile")
         echo "Loading: $filename"
-        
+
         if docker load -i "$tarfile"; then
             echo "  ✅ Loaded successfully"
             ((loaded_count++))
