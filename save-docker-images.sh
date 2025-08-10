@@ -22,6 +22,8 @@ print_images_info() {
     echo "  🤖 Ollama: $([ "$show_names" == "true" ] && echo "ollama/ollama:latest" || echo "for local AI models")"
     echo "  🌐 Open WebUI: $([ "$show_names" == "true" ] && echo "ghcr.io/open-webui/open-webui:main" || echo "for AI chat interface")"
     echo "  🎉 Ollama Chat Party: $([ "$show_names" == "true" ] && echo "psyb0t/ollama-chat-party:latest" || echo "for RAG-enabled chat")"
+    echo "  🦙 LLaMA.cpp CPU: $([ "$show_names" == "true" ] && echo "ghcr.io/ggml-org/llama.cpp:light" || echo "for local LLM inference")"
+    echo "  🦙 LLaMA.cpp GPU: $([ "$show_names" == "true" ] && echo "ghcr.io/ggml-org/llama.cpp:light-cuda" || echo "for GPU-accelerated LLM inference")"
     echo "  💬 TheLounge: $([ "$show_names" == "true" ] && echo "thelounge/thelounge:latest" || echo "for web-based IRC client")"
     echo "  🌐 InspIRCd: $([ "$show_names" == "true" ] && echo "inspircd/inspircd-docker:latest" || echo "for IRC server hosting")"
     echo "  📻 Icecast: $([ "$show_names" == "true" ] && echo "libretime/icecast:latest" || echo "for audio streaming")"
@@ -47,6 +49,10 @@ IMAGES=(
     "ollama/ollama:latest"          # Local AI model server
     "ghcr.io/open-webui/open-webui:main"  # Web UI for Ollama
     "psyb0t/ollama-chat-party:latest"      # RAG-enabled chat interface
+    
+    # LLaMA.cpp runtime containers
+    "ghcr.io/ggml-org/llama.cpp:light"      # CPU-only llama.cpp runtime
+    "ghcr.io/ggml-org/llama.cpp:light-cuda" # GPU-enabled llama.cpp runtime
     
     # IRC chat network
     "thelounge/thelounge:latest"    # Web-based IRC client

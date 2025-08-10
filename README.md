@@ -9,6 +9,7 @@ Docker Compose setup for when the internet dies and you still need to get shit d
 - [What the hell is this?](#what-the-hell-is-this)
 - [Quick Start (if you're in a hurry)](#quick-start-if-youre-in-a-hurry)
 - [Services Overview](#services-overview)
+  - [Local LLaMA Models](#local-llama-models-llama-directory)
 - [Preparing for the Apocalypse](#preparing-for-the-apocalypse)
   - [Download Docker Images](#download-docker-images)
   - [Linux Packages](#linux-packages)
@@ -85,6 +86,39 @@ Audio streaming server for broadcasting live audio streams to multiple listeners
 ### File Server (Port 8005)
 
 Web-based file browser for downloading all offline content via HTTP. Serves files from `apps/*/data/`, `docker-images/`, `zim/data/`, and custom files from `file-server/other-files/`. Simply browse the web interface to download APKs, DEBs, ISOs, Docker images, or any custom files. Supports basic authentication - default credentials: `offgrid` / `offgrid123`.
+
+### Local LLaMA Models (llama/ directory)
+
+Run large language models locally using llama.cpp Docker containers. Models run completely offline with no external dependencies.
+
+**Adding Models:**
+- Download GGUF format models and place them in `llama/data/`
+- Models should be quantized (Q4_K_M, Q5_K_M, etc.) for optimal performance
+
+**Running Models:**
+```bash
+cd llama
+
+# Run with CPU only
+./run-cpu.sh model_name.gguf
+
+# Run with GPU acceleration (requires NVIDIA GPU)
+./run-gpu.sh model_name.gguf
+
+# List available models
+./run-cpu.sh
+```
+
+**Examples:**
+```bash
+# Download a model (example)
+wget -P llama/data/ https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/model.gguf
+
+# Run the model
+./llama/run-cpu.sh gpt-oss-20b-Q4_K_M.gguf
+```
+
+The scripts automatically validate model files, provide helpful error messages, and share common functionality through `common.sh`. GPU acceleration requires Docker with NVIDIA Container Runtime installed.
 
 ## Preparing for the Apocalypse
 
@@ -332,6 +366,7 @@ All important data persists in these directories:
 ```
 ollama/data/          # AI models and SSH keys
 openwebui/data/       # Chat history and settings
+llama/data/           # Local GGUF models for llama.cpp
 zim/data/             # Offline web archives
 apps/android/apk/data/    # Downloaded APK files
 apps/iso/data/           # Downloaded ISO images
