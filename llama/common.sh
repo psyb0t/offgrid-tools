@@ -14,7 +14,7 @@ run_llama_server() {
     fi
 
     # Add default host, port, and browser-use compatible settings
-    local args="--host 0.0.0.0 --jinja --chat-template auto $@"
+    local args="--host 0.0.0.0 $@"
     if [[ "$args" != *"--port"* ]]; then
         args="--port 9000 $args"
     fi
