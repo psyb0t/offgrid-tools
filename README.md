@@ -100,11 +100,11 @@ Run large language models locally using llama.cpp Docker containers. Models run 
 cd llama
 
 # Web UI server mode (configure everything in browser)
-./run-cpu-gui.sh model_name.gguf                              # Available at http://localhost:9000
-./run-gpu-gui.sh model_name.gguf                              # Available at http://localhost:9000
-./run-gpu-gui.sh model_name.gguf --ngl 20                     # Custom GPU layers
-./run-cpu-gui.sh model_name.gguf --mmproj mmproj_file.gguf    # Vision capabilities
-./run-gpu-gui.sh model_name.gguf --ngl 15 --mmproj mmproj_file.gguf  # GPU + vision
+./run-cpu-gui.sh --model model_name.gguf                              # Available at http://localhost:9000
+./run-gpu-gui.sh --model model_name.gguf                              # Available at http://localhost:9000
+./run-gpu-gui.sh --model model_name.gguf --ngl 20                     # Custom GPU layers
+./run-cpu-gui.sh --model model_name.gguf --mmproj mmproj_file.gguf    # Vision capabilities
+./run-gpu-gui.sh --model model_name.gguf --ngl 15 --mmproj mmproj_file.gguf  # GPU + vision
 
 # Get help and see all available parameters
 ./run-cpu-gui.sh --help
@@ -117,8 +117,8 @@ cd llama
 
 **GUI Server Mode:**
 The GUI scripts (`run-cpu-gui.sh`, `run-gpu-gui.sh`) provide a web interface for all model interaction:
-- **CPU mode**: `run-cpu-gui.sh` accepts model name and optional `--mmproj` for vision
-- **GPU mode**: `run-gpu-gui.sh` accepts model name, `--ngl` for GPU layers, and `--mmproj` for vision
+- **CPU mode**: `run-cpu-gui.sh` accepts `--model` parameter and optional `--mmproj` for vision
+- **GPU mode**: `run-gpu-gui.sh` accepts `--model` parameter, `--ngl` for GPU layers, and `--mmproj` for vision
 - **Web interface** - Configure temperature, system prompts, sampling at `http://localhost:9000`
 - **Browser-based** - All model parameters controlled through the web UI
 - **Multi-user** - Multiple people can chat simultaneously
@@ -138,19 +138,19 @@ The `system-prompts/` directory contains ready-to-use personality templates that
 wget -P llama/models/ https://huggingface.co/microsoft/DialoGPT-medium/resolve/main/model.gguf
 
 # Run with default settings (CPU mode)
-./llama/run-cpu-gui.sh gpt-oss-20b-Q4_K_M.gguf
+./llama/run-cpu-gui.sh --model gpt-oss-20b-Q4_K_M.gguf
 
 # Run with GPU acceleration (all layers)
-./llama/run-gpu-gui.sh gpt-oss-20b-Q4_K_M.gguf
+./llama/run-gpu-gui.sh --model gpt-oss-20b-Q4_K_M.gguf
 
 # Run with custom GPU layers
-./llama/run-gpu-gui.sh gpt-oss-20b-Q4_K_M.gguf --ngl 20
+./llama/run-gpu-gui.sh --model gpt-oss-20b-Q4_K_M.gguf --ngl 20
 
 # Enable vision capabilities with multimodal projection
-./llama/run-cpu-gui.sh gpt-oss-20b-Q4_K_M.gguf --mmproj mmproj-google_gemma-3-27b-it-f16.gguf
+./llama/run-cpu-gui.sh --model gpt-oss-20b-Q4_K_M.gguf --mmproj mmproj-google_gemma-3-27b-it-f16.gguf
 
 # GPU with vision capabilities
-./llama/run-gpu-gui.sh OpenAI-20B-NEO-Uncensored2-IQ4_NL.gguf --ngl 15 --mmproj mmproj-google_gemma-3-27b-it-f16.gguf
+./llama/run-gpu-gui.sh --model OpenAI-20B-NEO-Uncensored2-IQ4_NL.gguf --ngl 15 --mmproj mmproj-google_gemma-3-27b-it-f16.gguf
 ```
 
 The scripts automatically validate model files and provide comprehensive help. All model parameters (temperature, system prompts, etc.) are configured through the web UI at `http://localhost:9000`. GPU acceleration requires Docker with NVIDIA Container Runtime installed.
