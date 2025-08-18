@@ -59,9 +59,9 @@ But seriously, read the rest or you'll be fucked when you actually need this off
 
 Offline content server that serves ZIM archive files through a web interface. Reads ZIM files you place in `zim/data/` including Wikipedia dumps, educational materials, and archived websites. Essential for accessing knowledge when internet is unavailable. Simply visit the web interface to browse and search offline content - no additional setup required.
 
-### Ollama (Internal Port 11434)
+### Ollama (Port 11434)
 
-Local AI model server that runs language models completely offline on your hardware. Stores models and configuration in `ollama/data/` directory. Provides ChatGPT-like capabilities without sending data to external services. Not directly accessible from host - access through Open WebUI or Ollama Chat Party. Models are automatically downloaded on first use - larger models require more RAM and benefit from GPU acceleration.
+Local AI model server that runs language models completely offline on your hardware. Stores models and configuration in `ollama/data/` directory. Provides ChatGPT-like capabilities without sending data to external services. Models are automatically downloaded on first use - larger models require more RAM and benefit from GPU acceleration.
 
 ### Open WebUI (Port 8001)
 
@@ -212,7 +212,7 @@ cd ubuntu
 
 # Download VM in your preferred format
 ./get-qcow2.sh    # For QEMU/KVM
-./get-vdi.sh      # For VirtualBox  
+./get-vdi.sh      # For VirtualBox
 ./get-vhdx.sh     # For Hyper-V
 
 # Run with QEMU (16GB RAM, 8 cores)
