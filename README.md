@@ -1,5 +1,8 @@
 # 🔥 offgrid-tools 🔥
 
+[![version](https://raw.githubusercontent.com/psyb0t/offgrid-tools/badges/version.svg)](https://github.com/psyb0t/offgrid-tools/releases)
+[![license](https://raw.githubusercontent.com/psyb0t/offgrid-tools/badges/license.svg)](LICENSE)
+
 fuck the grid 🖕
 
 Docker Compose setup for when the internet dies and you still need to get shit done.

@@ -55,3 +55,4 @@ inspircd/logs/*
 !inspircd/logs/.gitkeep
 
 CLAUDE.md
+git-update.sh
