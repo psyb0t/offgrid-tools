@@ -56,3 +56,6 @@ inspircd/logs/*
 
 CLAUDE.md
 git-update.sh
+
+# Local tooling scratch
+.telemetry/
