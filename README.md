@@ -3,7 +3,6 @@
 [![CI](https://github.com/psyb0t/offgrid-tools/actions/workflows/pipeline.yml/badge.svg?branch=main)](https://github.com/psyb0t/offgrid-tools/actions/workflows/pipeline.yml)
 [![version](https://raw.githubusercontent.com/psyb0t/offgrid-tools/badges/version.svg)](https://github.com/psyb0t/offgrid-tools/releases)
 [![license](https://raw.githubusercontent.com/psyb0t/offgrid-tools/badges/license.svg)](LICENSE)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/psyb0t/offgrid-tools)
 
 fuck the grid 🖕
 
