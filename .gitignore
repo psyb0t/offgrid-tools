@@ -1,3 +1,15 @@
+# Codex / agent scratch — never commit
+AGENTS.md
+CODEX.local.md
+.research_files/
+.agent_notes/
+.agent_knowledge/
+PLAN.md
+implplan.md
+NOTES.md
+TODO.md
+WIP.md
+
 # Data directories - ignore all data directories but keep .gitkeep files
 **/data/*
 !**/data/.gitkeep
@@ -56,6 +68,30 @@ inspircd/logs/*
 
 CLAUDE.md
 git-update.sh
+git-update.sh.debot
 
 # Local tooling scratch
 .telemetry/
+
+# Local model storage and Strata installation
+/models/gguf/
+/strata/*
+!/strata/run.sh
+!/strata/setup-container.sh
+!/strata/Dockerfile.local
+!/strata/.dockerignore
+!/strata/.gitignore
+!/strata/config.json
+!/strata/model.sha256
+!/strata/models.json
+!/strata/requirements.lock
+!/strata/README.offgrid.md
+/.migration-backups/
+/.testing/
+
+.testing/
+
+.env
+.env.*
+!.env.example
+/offgrid-sync.sh

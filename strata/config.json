@@ -1,0 +1,24 @@
+{
+  "exe": "/data/bw/qwen-strata/engine/strata",
+  "args": [
+    "--pack", "/data/bw/qwen-strata/data/packs/orca-q4_k_s",
+    "--native", "/models/qwen-flash-next-uncensored-q4_k_s/Qwen3.8-Flash-Next-Uncensored-Q4_K_S-00001-of-00003.gguf",
+    "--ple-gguf", "/models/qwen-flash-next-uncensored-q4_k_s/Qwen3.8-Flash-Next-Uncensored-Q4_K_S-00001-of-00003.gguf",
+    "--expert-profile", "/data/bw/qwen-strata/data/expert-profile.bin",
+    "--expert-cache", "auto", "--prefill", "auto",
+    "--spec", "4", "--spec-min-p", "0.5",
+    "--mtp", "/data/bw/qwen-strata/data/mtp/rt",
+    "--max-context", "262144", "--kv", "int8", "--kv-resident", "32768",
+    "--resident-budget-gib", "68", "--vram-reserve-mib", "2048"
+  ],
+  "cwd": "/data/bw/qwen-strata",
+  "tokenizer": "/data/bw/qwen-strata/data/packs/orca-q4_k_s/tokenizer",
+  "model_name": "qwen3.8-flash-next-uncensored-q4_k_s",
+  "log": "/data/bw/qwen-strata/strata-orca-q4_k_s.log",
+  "lib_dirs": ["/usr/local/cuda/bin", "/usr/local/cuda/lib64"],
+  "port": 8080,
+  "gpu": 0,
+  "gpus_asked": true,
+  "host": "0.0.0.0",
+  "parallel": 1
+}

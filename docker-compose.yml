@@ -1,4 +1,51 @@
 services:
+  strata:
+    profiles: [strata]
+    image: qwen-strata-local:fb58e0d
+    pull_policy: never
+    container_name: qwen-strata
+    working_dir: /data/bw/qwen-strata
+    command: ["/data/bw/qwen-strata/.venv/bin/python", "-m", "serve.server", "--engine", "strata", "--config", "/data/bw/qwen-strata/${STRATA_CONFIG:-strata-orca-q4_k_s.json}", "--port", "8080"]
+    gpus: all
+    init: true
+    user: "${STRATA_UID:-1000}:${STRATA_GID:-1000}"
+    environment:
+      XDG_CONFIG_HOME: /data/bw/qwen-strata/.config
+    ports:
+      - "127.0.0.1:${STRATA_PORT:-8080}:8080"
+    volumes:
+      - ${STRATA_RUNTIME_DIR:-./strata}:/data/bw/qwen-strata
+      - ./models/gguf:/models:ro
+      - ${STRATA_GGUF_DIR:-./models/gguf/qwen-flash-next-uncensored-q4_k_s}:/selected-model:ro
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    read_only: true
+    tmpfs:
+      - /tmp:size=2g,nosuid
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: ${STRATA_MEMORY_GIB:-88}g
+    memswap_limit: ${STRATA_MEMORY_GIB:-88}g
+    cpus: ${STRATA_CPUS:-10}
+    pids_limit: 512
+    restart: "no"
+    stop_grace_period: 60s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 120m
+    networks:
+      - offgrid
+
   kiwix:
     image: ghcr.io/kiwix/kiwix-serve:latest
     container_name: offgrid-tools-kiwix

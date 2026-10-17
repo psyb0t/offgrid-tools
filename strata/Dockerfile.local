@@ -1,0 +1,8 @@
+FROM nvidia/cuda:13.0.0-devel-ubuntu24.04@sha256:435220c0fef35cbf712e11999f8670a83835ef3cdd18564e5e8122f83078c88c
+ENV DEBIAN_FRONTEND=noninteractive PYTHONUNBUFFERED=1 STRATA_EXECV=1
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl python3 python3-venv libgomp1 libatomic1 build-essential aria2 \
+    && rm -rf /var/lib/apt/lists/*
+USER 1000:1000
+WORKDIR /data/bw/qwen-strata
+CMD ["/data/bw/qwen-strata/.venv/bin/python", "-m", "serve.server", "--engine", "strata", "--config", "/data/bw/qwen-strata/strata-orca-q4_k_s.json", "--port", "8080"]

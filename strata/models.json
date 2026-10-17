@@ -1,0 +1,48 @@
+{
+  "orca-q4-k-s": {
+    "name": "Flash-Next Uncensored Q4_K_S",
+    "repo": "orcarouter/Qwen3.8-Flash-Next-Uncensored-GGUF",
+    "revision": "d27c0a15447dd92ae7c90919352c6810496945b1",
+    "subdir": "qwen-flash-next-uncensored-q4_k_s", "pack": "orca-q4_k_s", "ple": 0,
+    "min_ram_gib": 112, "memory_gib": 88, "resident_gib": 68, "context": 262144, "cpu_threads": 10,
+    "min_vram_mib": 15360, "vram_reserve_mib": 2048,
+    "files": [
+      {"path":"Qwen3.8-Flash-Next-Uncensored-Q4_K_S-00001-of-00003.gguf","bytes":44888775360,"sha256":"8f940bf64c9a62a4dce1935999ac8ed287bb90ff5a4e5cc22ddac767cd56557d"},
+      {"path":"Qwen3.8-Flash-Next-Uncensored-Q4_K_S-00002-of-00003.gguf","bytes":44934400672,"sha256":"d19d80982e5fa2416a21342be71e5d8041c0c088720ac5cc54bca79a9eafb10c"},
+      {"path":"Qwen3.8-Flash-Next-Uncensored-Q4_K_S-00003-of-00003.gguf","bytes":21946739488,"sha256":"6be547f9575cfdf23314426d62fb65ef4052841dd156f7b77dd79a93da3e4087"}
+    ]
+  },
+  "qwen-q2-0": {
+    "name":"Flash-Next Q2_0", "repo":"ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF",
+    "revision":"ed59f92082b1e93c0e96d60a8b11aab089b52f09",
+    "subdir":"qwen-flash-next-q2_0", "pack":"qwen-q2-0", "ple":1,
+    "min_ram_gib":44,"memory_gib":36,"resident_gib":24,"context":32768,"cpu_threads":6,
+    "min_vram_mib":11264,"vram_reserve_mib":1536,
+    "files":[
+      {"path":"Q2_0/Qwen3.8-Flash-Next-GSQ-RCO-Q2_0-00001-of-00002.gguf","bytes":37623740192,"sha256":"69820c02ec7d0b45ef2ebb19d6620299db749fe2aded7f39f93c6b88b199b720"},
+      {"path":"Q2_0/Qwen3.8-Flash-Next-GSQ-RCO-Q2_0-00002-of-00002.gguf","bytes":28800138432,"sha256":"316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113"}
+    ]
+  },
+  "qwen-iq2-xs": {
+    "name":"Flash-Next IQ2_XS", "repo":"ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF",
+    "revision":"ed59f92082b1e93c0e96d60a8b11aab089b52f09",
+    "subdir":"qwen-flash-next-iq2_xs", "pack":"qwen-iq2-xs", "ple":1,
+    "min_ram_gib":44,"memory_gib":36,"resident_gib":25,"context":32768,"cpu_threads":6,
+    "min_vram_mib":11264,"vram_reserve_mib":1536,
+    "files":[
+      {"path":"IQ2_XS/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00001-of-00002.gguf","bytes":39225954592,"sha256":"92cee27ae5bbadcd732416a0f7a7f0acc092399dbbe8f5a5efa707c2ec0a49d7"},
+      {"path":"IQ2_XS/Qwen3.8-Flash-Next-GSQ-RCO-IQ2_XS-00002-of-00002.gguf","bytes":28800138432,"sha256":"316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113"}
+    ]
+  },
+  "qwen-iq3-s": {
+    "name":"Flash-Next IQ3_S", "repo":"ISTA-DASLab/Qwen3.8-Flash-Next-GSQ-RCO-GGUF",
+    "revision":"ed59f92082b1e93c0e96d60a8b11aab089b52f09",
+    "subdir":"qwen-flash-next-iq3_s", "pack":"qwen-iq3-s", "ple":1,
+    "min_ram_gib":56,"memory_gib":50,"resident_gib":40,"context":32768,"cpu_threads":8,
+    "min_vram_mib":11264,"vram_reserve_mib":1536,
+    "files":[
+      {"path":"IQ3_S/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_S-00001-of-00002.gguf","bytes":54817524224,"sha256":"4c1eb2ceb4915e1192f4f386021897bde56a97f40a0bb78bb86465e0f7d2aca3"},
+      {"path":"IQ3_S/Qwen3.8-Flash-Next-GSQ-RCO-IQ3_S-00002-of-00002.gguf","bytes":28800138432,"sha256":"316b46f3a2dbd68c900f43136ab9449f9dcc3725dfd8c794847c204bc161e113"}
+    ]
+  }
+}

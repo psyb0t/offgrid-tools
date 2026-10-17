@@ -2,6 +2,15 @@
 
 All notable changes per release. Versions follow [semver](https://semver.org).
 
+## v0.2.0, 2026-10-17
+
+- Added opt-in Strata setup and serving with selectable Flash-Next presets, saved settings, configurable resource limits and existing-GGUF reuse.
+- Added local Strata image builds, offline archives and SHA256 verification before loading.
+- Changed llama.cpp launchers to share `models/gguf/` with Strata and bind their UI to localhost. They no longer pull images automatically.
+- Migration: move existing weights from `llama/models/` into `models/gguf/`, use `/app/models/` paths in launcher arguments, and load compatible llama.cpp images before starting. Remote clients need a separate access configuration because port 9000 now binds to localhost.
+- Updated setup, model compatibility and offline-copy documentation.
+- Added the default-rule secret-scanning configuration after v0.1.3.
+
 ## v0.1.3 — 2026-08-01
 
 Repository infrastructure only — no change to any tool, script or image in this collection.
